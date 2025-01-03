@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/8ce2bad5-2f03-4736-b171-2d2e09bf7e03)
+
 # MDU Interface Frontend
 
 A modern, high-performance web interface for music stem separation and audio processing built with Bun, React, and TypeScript.
