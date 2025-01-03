@@ -1,151 +1,281 @@
-# Media Downloader Utility (MDU)
+# MDU Interface Frontend
 
-<div align="center">
+A modern, high-performance web interface for music stem separation and audio processing built with Bun, React, and TypeScript.
 
-  [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
-  [![C++](https://img.shields.io/badge/C++-20-orange.svg)](https://isocpp.org/)
-  [![CEF](https://img.shields.io/badge/CEF-119-green.svg)](https://bitbucket.org/chromiumembedded/cef/)
-  [![React](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
-  [![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)](https://github.com/project-mdu)
-  [![GitHub release](https://img.shields.io/github/v/release/project-mdu/mdu?include_prereleases)](https://github.com/project-mdu/mdu/releases)
+## 🚀 Features
 
-</div>
+- 🎵 Professional audio stem separation
+- 🎨 Modern, responsive UI with Apple/Vercel-inspired design
+- 🌍 Multi-language support (EN, TH, ID, JP)
+- 🎛️ Advanced audio processing settings
+- 📊 Real-time processing visualization
+- 💾 Batch processing capabilities
+- ⚡ High-performance Bun runtime
+- 🌓 Light/Dark theme support
 
-## Overview
+## 🛠️ Tech Stack
 
-MDU (Media Downloader Utility) is a modern, cross-platform media downloader built with C++, Chromium Embedded Framework (CEF), and React. It provides an intuitive interface for downloading media content with advanced features and customization options.
+- **Runtime:** [Bun](https://bun.sh)
+- **Framework:** React 18
+- **Language:** TypeScript
+- **Styling:** TailwindCSS
+- **UI Components:** shadcn/ui
+- **State Management:** React Query
+- **Routing:** React Router
+- **Internationalization:** i18next
+- **Motion:** Framer Motion
+- **Audio Processing:** Web Audio API
+- **Backend Integration:** FastAPI (Python)
 
-## Features
+## 📋 Requirements
 
-- 🎥 Support for multiple video platforms
-- 🎵 High-quality audio extraction
-- 📊 Real-time download progress tracking
-- 🎨 Modern, customizable UI
-- 📝 Advanced download configuration
-- 📂 Smart file management
-- 📱 Format conversion support
-- 🔄 Playlist downloading
-- 🎯 Quality selection
-- 🔧 Advanced encoding options
+- [Bun](https://bun.sh) >= 1.0.0
+- Node.js >= 18.0.0 (for some dependencies)
 
-## Installation
+## 📦 Installation
 
-### Prerequisites
-- Node.js 18 or later
-- C++ development environment
-- CMake 3.20 or later
-- FFmpeg
-- Visual Studio 2022 (Windows) or GCC/Clang (Linux/macOS)
-
-### Windows/macOS/Linux
-1. Download the latest release from [Releases](https://github.com/project-mdu/mdu/releases)
-2. Install the application following your system's standard procedure
-3. Ensure FFmpeg is installed and in your system PATH
-
-### Build from Source
+1. Install Bun (if not already installed):
 ```bash
-# Clone the repository
-git clone https://github.com/project-mdu/mdu.git
-cd mdu
-
-# Install frontend dependencies
-pnpm install
-
-# Build CEF project
-mkdir build && cd build
-cmake ..
-cmake --build . --config Release
-
-# Development
-pnpm run dev
-
-# Build
-pnpm run build
+curl -fsSL https://bun.sh/install | bash
 ```
 
-## Tech Stack
-
-### Backend
-- **C++20** - Systems programming language
-- **CEF** - Chromium Embedded Framework
-- **FFmpeg** - Media processing
-- **SQLite** - Database operations
-- **spdlog** - Logging library
-- **nlohmann/json** - JSON handling
-- **libcurl** - Network operations
-
-### Frontend
-- **React 18** - UI framework
-- **Vite** - Build tool
-- **TypeScript** - Type-safe JavaScript
-- **TailwindCSS** - Utility-first CSS
-- **React Query** - Data fetching
-- **Zustand** - State management
-- **React Router** - Navigation
-- **shadcn/ui** - UI components
-
-## Project Structure
-
-```
-mdu/
-├── src/                 # C++ backend & Frontend
-│   ├── backend/         # C++ source code
-│   │   ├── cef/        # CEF integration
-│   │   ├── core/       # Core functionality
-│   │   ├── handlers/   # CEF handlers
-│   │   └── utils/      # Utility functions
-│   ├── components/     # React components
-│   ├── hooks/          # Custom hooks
-│   ├── lib/            # Frontend libraries
-│   ├── pages/          # Route pages
-│   ├── store/          # State management
-│   └── styles/         # Global styles
-├── public/             # Static assets
-├── tests/              # Test files
-├── CMakeLists.txt     # CMake configuration
-├── package.json        # Node.js dependencies
-└── vite.config.ts     # Vite configuration
+2. Clone the repository:
+```bash
+git clone https://github.com/yourusername/mdu-interface.git
+cd mdu-interface
 ```
 
-## Development
+3. Install dependencies:
+```bash
+bun install
+```
+
+4. Start the development server:
+```bash
+bun dev
+```
+
+## 🏃‍♂️ Scripts
+
+```json
+{
+  "scripts": {
+    "dev": "bun run --hot src/index.tsx",
+    "build": "bun build ./src/index.tsx --outdir ./dist",
+    "start": "bun run dist/index.js",
+    "test": "bun test",
+    "lint": "bun eslint",
+    "format": "bun prettier",
+    "type-check": "bun tsc --noEmit"
+  }
+}
+```
+
+## 🏗️ Project Structure
+
+```
+mdu-interface/
+├── public/
+│   └── locales/           # Translation files
+├── src/
+│   ├── components/        # React components
+│   │   ├── ui/           # Base UI components
+│   │   ├── converter/    # Audio conversion components
+│   │   ├── settings/     # Settings components
+│   │   └── stemextractor/# Stem extraction components
+│   ├── lib/              # Utility libraries
+│   ├── styles/           # Global styles
+│   ├── types/            # TypeScript definitions
+│   └── utils/            # Utility functions
+├── tests/                # Test files
+├── bunfig.toml           # Bun configuration
+└── tsconfig.json         # TypeScript configuration
+```
+
+## ⚙️ Configuration
+
+### Bun Configuration
+
+```toml
+# bunfig.toml
+[bundle]
+entry = "./src/index.tsx"
+outdir = "./dist"
+minify = true
+sourcemap = true
+
+[dev]
+port = 3000
+hot = true
+
+[test]
+coverage = true
+```
+
+### Environment Variables
+
+Create a `.env` file:
+
+```env
+VITE_API_URL=http://localhost:8000
+VITE_APP_NAME=MDU Interface
+VITE_DEBUG=true
+```
+
+Load environment variables in Bun:
+```typescript
+const env = Bun.env;
+```
+
+## 🧪 Testing
+
+Bun comes with a built-in test runner:
 
 ```bash
-# Install dependencies
-pnpm install
-
-# Start development server
-pnpm run dev
-
 # Run tests
-ctest
-pnpm run test
+bun test
 
-# Lint
-pnpm run lint
-clang-format -i src/backend/**/*.{cpp,h}
+# Run tests with coverage
+bun test --coverage
 
-# Format code
-pnpm run format
-clang-format -i src/backend/**/*.{cpp,h}
-
-# Build for production
-pnpm run build
+# Watch mode
+bun test --watch
 ```
 
-[Rest of the README remains the same, just update the dependencies section]
+Example test:
+```typescript
+import { expect, test } from "bun:test";
 
-### Development Dependencies
-- C++20 compiler
-- CMake 3.20+
-- Node.js 18+
-- pnpm
-- System-specific development tools
+test("component renders correctly", () => {
+  // Test logic
+});
+```
 
-## Acknowledgments
+## 🚀 Development
 
-- [CEF](https://bitbucket.org/chromiumembedded/cef/)
-- [React](https://reactjs.org/)
-- [Chromium](https://www.chromium.org/)
-- [FFmpeg](https://ffmpeg.org/)
+### Hot Module Replacement
 
-[Rest of the content remains the same]
+Bun supports HMR out of the box:
+
+```bash
+bun --hot src/index.tsx
+```
+
+### TypeScript
+
+Bun includes TypeScript support by default:
+
+```typescript
+import { type BunFile } from "bun";
+```
+
+### Using Bun.serve
+
+```typescript
+const server = Bun.serve({
+  port: 3000,
+  fetch(req) {
+    return new Response("Welcome to MDU Interface!");
+  },
+});
+
+console.log(`Listening on http://localhost:${server.port}`);
+```
+
+## 📦 Building for Production
+
+```bash
+# Build the application
+bun build ./src/index.tsx --outdir ./dist
+
+# Run the production build
+bun run dist/index.js
+```
+
+## 🔧 Performance Optimization
+
+Bun provides several performance advantages:
+
+- Native TypeScript/JSX support
+- Built-in bundler
+- Fast dependency installation
+- Efficient hot reloading
+- Quick test execution
+
+## 🔌 API Integration
+
+Using Bun's fetch:
+
+```typescript
+const response = await fetch(`${env.VITE_API_URL}/extraction/start`, {
+  method: 'POST',
+  body: formData,
+});
+```
+
+## 🚀 Deployment
+
+1. Build the project:
+```bash
+bun build
+```
+
+2. Run in production:
+```bash
+NODE_ENV=production bun start
+```
+
+## 📚 Additional Resources
+
+- [Bun Documentation](https://bun.sh/docs)
+- [Bun Discord](https://bun.sh/discord)
+- [Bun GitHub](https://github.com/oven-sh/bun)
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+## 🐛 Debugging
+
+Bun provides built-in debugging capabilities:
+
+```bash
+bun --inspect src/index.tsx
+```
+
+## 📈 Performance Monitoring
+
+```bash
+bun run --profile
+```
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👥 Team
+
+- Lead Developer: [Name]
+- UI/UX Designer: [Name]
+- Project Manager: [Name]
+
+## 📞 Support
+
+For support, email support@example.com or join our Discord channel.
+
+## 🙏 Acknowledgments
+
+- Bun team for the amazing runtime
+- shadcn/ui for the component library
+- TailwindCSS team
+- React team
+
+---
+
+Made with ❤️ by Khaoniewji Development team
+
+![Powered by Bun](https://img.shields.io/badge/Powered%20by-Bun-orange)
