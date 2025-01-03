@@ -1,0 +1,93 @@
+
+{
+  "app": {
+    "name": "Media Downloader Utility",
+    "status": {
+      "ready": "Siap"
+    }
+  },
+  "navigation": {
+    "downloader": "Pengunduh",
+    "converter": "Konverter",
+    "stemExtractor": "Ekstraktor Stem",
+    "remux": "Remux",
+    "settings": "Pengaturan"
+  },
+  "downloads": {
+    "title": "Unduhan",
+    "actions": {
+      "addDownload": "Tambah Unduhan",
+      "stopAll": "Hentikan Semua",
+      "clearHistory": "Hapus Riwayat"
+    },
+    "search": {
+      "placeholder": "Cari unduhan"
+    },
+    "status": {
+      "loading": "Memuat unduhan...",
+      "noDownloads": "Tidak ada unduhan",
+      "completed": "Selesai",
+      "downloading": "Mengunduh",
+      "error": "Error",
+      "cancelled": "Dibatalkan"
+    },
+    "fileType": {
+      "audio": "Audio"
+    },
+    "info": {
+      "eta": "Perkiraan waktu"
+    }
+  },
+  "sidebar": {
+    "categories": {
+      "title": "Kategori",
+      "downloads": "Unduhan",
+      "queue": "Antrian",
+      "completed": "Selesai"
+    },
+    "status": {
+      "title": "Status",
+      "storage": "Penyimpanan",
+      "network": "Jaringan",
+      "download": "↓",
+      "upload": "↑",
+      "speed": "{{value}} MB/s"
+    },
+    "recentFiles": {
+      "title": "File Terbaru"
+    }
+  },
+  "settings": {
+    "title": "Pengaturan",
+    "tabs": {
+      "general": "Umum",
+      "language": "Bahasa",
+      "directories": "Direktori",
+      "downloads": "Unduhan",
+      "audio": "Audio",
+      "video": "Video",
+      "appearance": "Tampilan",
+      "about": "Tentang"
+    },
+    "general": {
+      "title": "Pengaturan Umum",
+      "startup": {
+        "title": "Startup",
+        "launchAtStartup": "Jalankan saat startup",
+        "launchAtStartupDescription": "Jalankan aplikasi secara otomatis saat komputer dinyalakan",
+        "minimizeToTray": "Minimalkan ke tray",
+        "minimizeToTrayDescription": "Biarkan aplikasi tetap berjalan di system tray saat ditutup"
+      },
+      "updates": {
+        "title": "Pembaruan",
+        "autoUpdate": "Pembaruan otomatis",
+        "autoUpdateDescription": "Unduh dan pasang pembaruan secara otomatis"
+      },
+      "performance": {
+        "title": "Performa",
+        "hardwareAcceleration": "Akselerasi hardware",
+        "hardwareAccelerationDescription": "Gunakan akselerasi GPU untuk performa yang lebih baik"
+      }
+    }
+  }
+}

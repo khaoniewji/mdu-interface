@@ -1,0 +1,957 @@
+{
+  "app": {
+    "name": "Media Downloader Utility",
+    "status": {
+      "ready": "พร้อมใช้งาน"
+    }
+  },
+  "navigation": {
+    "downloader": "ดาวน์โหลด",
+    "converter": "แปลงไฟล์",
+    "stemExtractor": "แยกเสียง",
+    "remux": "รีมักซ์",
+    "settings": "ตั้งค่า"
+  },
+  "downloads": {
+    "title": "ดาวน์โหลด",
+    "addModal": {
+      "title": "เพิ่มการดาวน์โหลด",
+      "urlPlaceholder": "ใส่ URL ของ YouTube",
+      "fetch": "ดึงข้อมูล",
+      "selectFormat": "เลือกรูปแบบ",
+      "download": "ดาวน์โหลด",
+      "encodingOptions": "ตัวเลือกการเข้ารหัส",
+      "audioQuality": "คุณภาพเสียง",
+      "videoQuality": "คุณภาพวิดีโอ",
+      "outputFormat": "รูปแบบไฟล์",
+      "audioQualityHint": "บิตเรตของเสียง (kbps)",
+      "videoQualityHint": "ความละเอียดวิดีโอ",
+      "outputFormatHint": "รูปแบบคอนเทนเนอร์"
+    },
+    "actions": {
+      "addDownload": "เพิ่มการดาวน์โหลด",
+      "stopAll": "หยุดทั้งหมด",
+      "clearHistory": "ล้างประวัติ",
+      "addFirst": "เพิ่มการดาวน์โหลดแรก",
+      "openFolder": "เปิดโฟลเดอร์",
+      "settings": "ตั้งค่า"
+    },
+    "status": {
+      "loading": "กำลังโหลด...",
+      "noDownloads": "ไม่มีรายการดาวน์โหลด",
+      "noDownloadsDesc": "เพิ่มรายการดาวน์โหลดใหม่โดยใช้ URL ของที่ไหนก็ได้"
+    },
+    "search": {
+      "placeholder": "ค้นหารายการดาวน์โหลด"
+    },
+    "errors": {
+      "emptyUrl": "กรุณาใส่ URL",
+      "invalidUrl": "URL ไม่ถูกต้อง",
+      "fetchError": "ไม่สามารถดึงข้อมูลวิดีโอได้"
+    },
+    "format": {
+      "quality": "คุณภาพ",
+      "size": "ขนาด",
+      "type": "ประเภท",
+      "video": "วิดีโอ",
+      "audio": "เสียง"
+    },
+    "info": {
+      "duration": "ความยาว",
+      "uploader": "ผู้อัพโหลด",
+      "views": "ยอดวิว"
+    }
+  },
+  "common": {
+    "save": "บันทึกการเปลี่ยนแปลง",
+    "cancel": "ยกเลิก",
+    "reset": "รีเซ็ต",
+    "enabled": "เปิดใช้งาน",
+    "disabled": "ปิดใช้งาน",
+    "settings": "ตั้งค่า",
+    "error": {
+      "required": "จำเป็นต้องระบุ",
+      "invalid": "ไม่ถูกต้อง",
+      "invalidPort": "พอร์ตไม่ถูกต้อง",
+      "invalidHost": "โฮสต์ไม่ถูกต้อง",
+      "timeout": "การเชื่อมต่อหมดเวลา",
+      "connection": "ไม่สามารถเชื่อมต่อได้"
+    },
+    "status": {
+      "connecting": "กำลังเชื่อมต่อ",
+      "connected": "เชื่อมต่อแล้ว",
+      "disconnected": "ยกเลิกการเชื่อมต่อ",
+      "error": "เกิดข้อผิดพลาด"
+    }
+  },
+  "settings": {
+    "title": "ตั้งค่า",
+    "sections": {
+      "general": "ทั่วไป",
+      "media": "สื่อ",
+      "advanced": "ขั้นสูง",
+      "about": "เกี่ยวกับ"
+    },
+    "tabs": {
+      "general": "ทั่วไป",
+      "language": "ภาษา",
+      "appearance": "การแสดงผล",
+      "directories": "ไดเรกทอรี",
+      "downloads": "ดาวน์โหลด",
+      "audio": "เสียง",
+      "video": "วิดีโอ",
+      "network": "เครือข่าย",
+      "privacy": "ความเป็นส่วนตัว",
+      "advanced": "ขั้นสูง",
+      "about": "เกี่ยวกับ"
+    },
+    "general": {
+      "title": "การตั้งค่าทั่วไป",
+      "startup": {
+        "title": "การเริ่มต้น",
+        "launchAtStartup": "เริ่มทำงานเมื่อเปิดเครื่อง",
+        "launchAtStartupDescription": "เริ่มแอปพลิเคชันโดยอัตโนมัติเมื่อคอมพิวเตอร์เริ่มทำงาน",
+        "minimizeToTray": "ย่อลงถาดระบบ",
+        "minimizeToTrayDescription": "เก็บแอปพลิเคชันไว้ในถาดระบบเมื่อปิด"
+      },
+      "updates": {
+        "title": "อัปเดต",
+        "autoUpdate": "อัปเดตอัตโนมัติ",
+        "autoUpdateDescription": "ดาวน์โหลดและติดตั้งอัปเดตโดยอัตโนมัติ",
+        "checkForUpdates": "ตรวจสอบอัปเดต",
+        "currentVersion": "เวอร์ชันปัจจุบัน"
+      },
+      "performance": {
+        "title": "ประสิทธิภาพ",
+        "hardwareAcceleration": "การเร่งความเร็วด้วยฮาร์ดแวร์",
+        "hardwareAccelerationDescription": "ใช้ GPU เพื่อเพิ่มประสิทธิภาพ",
+        "processPriority": "ลำดับความสำคัญของโปรเซส",
+        "processPriorityDescription": "ตั้งค่าลำดับความสำคัญของแอปพลิเคชัน"
+      }
+    },
+    "language": {
+      "title": "การตั้งค่าภาษา",
+      "display": "ภาษาที่แสดง",
+      "displayDescription": "เลือกภาษาที่ต้องการ",
+      "region": "รูปแบบภูมิภาค",
+      "regionDescription": "รูปแบบวันที่ เวลา และตัวเลข"
+    },
+    "appearance": {
+      "title": "ตั้งค่าการแสดงผล",
+      "theme": {
+        "title": "ธีม",
+        "options": {
+          "light": "สว่าง",
+          "dark": "มืด",
+          "system": "ระบบ"
+        }
+      },
+      "viewMode": {
+        "title": "โหมดการแสดงผล",
+        "options": {
+          "grid": "ตาราง",
+          "list": "รายการ",
+          "compact": "กะทัดรัด"
+        }
+      },
+      "thumbnailSize": {
+        "title": "ขนาดรูปย่อ",
+        "options": {
+          "small": "เล็ก",
+          "medium": "กลาง",
+          "large": "ใหญ่"
+        }
+      },
+      "additional": {
+        "title": "ตัวเลือกเพิ่มเติม",
+        "showTitles": "แสดงชื่อใต้ปก",
+        "animateCovers": "แอนิเมชันปกเมื่อชี้"
+      }
+    },
+    "directories": {
+      "title": "การตั้งค่าไดเรกทอรี",
+      "downloads": {
+        "title": "ตำแหน่งดาวน์โหลด",
+        "default": "โฟลเดอร์ดาวน์โหลดเริ่มต้น",
+        "custom": "ตำแหน่งที่กำหนดเอง",
+        "select": "เลือกโฟลเดอร์"
+      },
+      "organization": {
+        "title": "การจัดระเบียบไฟล์",
+        "createSubfolders": "สร้างโฟลเดอร์ย่อยตามประเภท",
+        "useArtistName": "ใช้ชื่อศิลปินในโครงสร้างโฟลเดอร์"
+      }
+    },
+    "downloads": {
+      "title": "การตั้งค่าการดาวน์โหลด",
+      "concurrent": {
+        "title": "การดาวน์โหลดพร้อมกัน",
+        "limit": "จำนวนการดาวน์โหลดพร้อมกันสูงสุด",
+        "description": "จำนวนไฟล์ที่จะดาวน์โหลดพร้อมกัน"
+      },
+      "bandwidth": {
+        "title": "แบนด์วิดธ์",
+        "limit": "จำกัดความเร็ว",
+        "unlimited": "ไม่จำกัด"
+      },
+      "completion": {
+        "title": "เมื่อเสร็จสิ้น",
+        "notification": "แสดงการแจ้งเตือน",
+        "sound": "เล่นเสียง",
+        "openFolder": "เปิดโฟลเดอร์"
+      }
+    },
+    "audio": {
+      "title": "การตั้งค่าเสียง",
+      "quality": {
+        "title": "คุณภาพ",
+        "format": "รูปแบบเริ่มต้น",
+        "bitrate": "บิตเรตเริ่มต้น"
+      },
+      "metadata": {
+        "title": "ข้อมูลเมตา",
+        "embedArtwork": "ฝังภาพปก",
+        "embedLyrics": "ฝังเนื้อเพลง",
+        "preserveTags": "เก็บแท็กที่มีอยู่"
+      }
+    },
+    "video": {
+      "title": "การตั้งค่าวิดีโอ",
+      "quality": {
+        "title": "คุณภาพ",
+        "resolution": "ความละเอียดเริ่มต้น",
+        "format": "รูปแบบเริ่มต้น",
+        "codec": "ตัวเข้ารหัสที่ต้องการ"
+      },
+      "advanced": {
+        "title": "ขั้นสูง",
+        "hardware": "การเข้ารหัสด้วยฮาร์ดแวร์",
+        "thumbnails": "ดาวน์โหลดภาพขนาดย่อ"
+      }
+    },
+    "network": {
+      "title": "ตั้งค่าเครือข่าย",
+      "proxy": {
+        "title": "พร็อกซี่",
+        "description": "กำหนดค่าเซิร์ฟเวอร์พร็อกซี่",
+        "enable": "เปิดใช้งานพร็อกซี่",
+        "host": "โฮสต์",
+        "hostPlaceholder": "proxy.example.com",
+        "port": "พอร์ต"
+      },
+      "connection": {
+        "title": "การเชื่อมต่อ",
+        "description": "กำหนดค่าพารามิเตอร์การเชื่อมต่อ",
+        "timeout": "หมดเวลาการเชื่อมต่อ",
+        "timeoutDescription": "ระยะเวลาหมดเวลาเป็นวินาที",
+        "retries": "จำนวนครั้งที่ลองใหม่สูงสุด",
+        "retriesDescription": "จำนวนครั้งที่พยายามเชื่อมต่อ"
+      }
+    },
+    "privacy": {
+      "title": "การตั้งค่าความเป็นส่วนตัว",
+      "data": {
+        "title": "การเก็บข้อมูล",
+        "analytics": "เปิดใช้งานการวิเคราะห์",
+        "crashReports": "ส่งรายงานข้อผิดพลาด"
+      },
+      "history": {
+        "title": "ประวัติ",
+        "keep": "เก็บประวัติการดาวน์โหลด",
+        "clear": "ล้างประวัติ"
+      }
+    },
+    "advanced": {
+      "title": "การตั้งค่าขั้นสูง",
+      "experimental": {
+        "title": "คุณสมบัติทดลอง",
+        "warning": "คุณสมบัติเหล่านี้อาจไม่เสถียร",
+        "enable": "เปิดใช้งานคุณสมบัติทดลอง"
+      },
+      "debugging": {
+        "title": "การแก้ไขข้อบกพร่อง",
+        "verbose": "บันทึกแบบละเอียด",
+        "console": "แสดงคอนโซลสำหรับนักพัฒนา"
+      }
+    },
+    "about": {
+      "title": "เกี่ยวกับ",
+      "version": "เวอร์ชัน",
+      "credits": "เครดิต",
+      "license": "ลิขสิทธิ์",
+      "updates": {
+        "title": "อัปเดต",
+        "check": "ตรวจสอบอัปเดต",
+        "current": "เวอร์ชันปัจจุบัน",
+        "available": "มีอัปเดตใหม่"
+      },
+      "links": {
+        "website": "เว็บไซต์",
+        "github": "GitHub",
+        "donate": "บริจาค"
+      }
+    }
+  },
+  "status": {
+    "ready": "พร้อมใช้งาน",
+    "app_version": "เวอร์ชันแอป",
+    "os": "OS",
+    "cpu": "CPU",
+    "memory": "หน่วยความจำ",
+    "error": {
+      "loading": "เกิดข้อผิดพลาดในการโหลดข้อมูลระบบ",
+      "update": "เกิดข้อผิดพลาดในการอัปเดตสถานะระบบ"
+    },
+    "performance": {
+      "usage": "การใช้งาน",
+      "total": "ทั้งหมด",
+      "available": "ที่ใช้ได้",
+      "speed": "ความเร็ว"
+    }
+  },
+  "sidebar": {
+    "categories": {
+      "title": "หมวดหมู่",
+      "downloads": "ดาวน์โหลด",
+      "queue": "คิว",
+      "completed": "เสร็จสิ้น"
+    },
+    "drives": {
+      "title": "ไดรฟ์",
+      "refresh": "รีเฟรชไดรฟ์",
+      "loading": "กำลังโหลดไดรฟ์...",
+      "free": "ว่าง",
+      "total": "ทั้งหมด",
+      "error": {
+        "loading": "ไม่สามารถโหลดไดรฟ์ได้"
+      }
+    },
+    "network": {
+      "title": "เครือข่าย",
+      "speed": "ความเร็ว",
+      "download": "ดาวน์โหลด",
+      "upload": "อัพโหลด",
+      "total": "รวม"
+    }
+  },
+  "about": {
+    "app": {
+      "title": "Media Downloader Utility",
+      "subtitle": "แอปพลิเคชันดาวน์โหลดและอ่านมังงะ",
+      "version": "เวอร์ชัน",
+      "build": "บิลด์",
+      "date": "วันที่บิลด์",
+      "platform": "ข้อมูลระบบ",
+      "os": "ระบบปฏิบัติการ",
+      "arch": "สถาปัตยกรรม",
+      "commit": "รหัสคอมมิต",
+      "channels": {
+        "title": "ช่องทางอัปเดต",
+        "stable": "เสถียร",
+        "beta": "ทดสอบ",
+        "nightly": "รายคืน"
+      }
+    },
+    "update": {
+      "title": "อัปเดต",
+      "check": "ตรวจสอบอัปเดต",
+      "checking": "กำลังตรวจสอบอัปเดต...",
+      "available": "มีเวอร์ชันใหม่ {{version}} พร้อมใช้งาน",
+      "latest": "คุณกำลังใช้เวอร์ชันล่าสุด",
+      "error": "ไม่สามารถตรวจสอบอัปเดตได้",
+      "notes": "บันทึกการเปลี่ยนแปลง",
+      "download": "ดาวน์โหลดอัปเดต",
+      "restart": "รีสตาร์ทเพื่ออัปเดต",
+      "progress": "กำลังดาวน์โหลดอัปเดต...",
+      "status": {
+        "checking": "กำลังตรวจสอบอัปเดต...",
+        "downloading": "กำลังดาวน์โหลดอัปเดต...",
+        "installing": "กำลังติดตั้งอัปเดต...",
+        "ready": "พร้อมรีสตาร์ท"
+      }
+    },
+    "links": {
+      "title": "ลิงก์ด่วน",
+      "github": "GitHub",
+      "website": "เว็บไซต์",
+      "issues": "รายงานปัญหา",
+      "discord": "ชุมชน Discord"
+    },
+    "help": {
+      "title": "ความช่วยเหลือและสนับสนุน",
+      "documentation": "เอกสารประกอบ",
+      "report": "รายงานปัญหา",
+      "discord": "เข้าร่วมชุมชน Discord",
+      "faq": "คำถามที่พบบ่อย",
+      "contribute": "วิธีมีส่วนร่วม"
+    },
+    "legal": {
+      "title": "กฎหมายและเครดิต",
+      "license": "ใบอนุญาต",
+      "credits": "เครดิต",
+      "third_party": "ใบอนุญาตบุคคลที่สาม",
+      "privacy": "นโยบายความเป็นส่วนตัว",
+      "terms": "ข้อกำหนดการใช้งาน"
+    },
+    "support": {
+      "title": "สนับสนุนการพัฒนา",
+      "description": "พิจารณาสนับสนุนโครงการหากคุณพบว่ามีประโยชน์",
+      "donate": "เลี้ยงกาแฟ",
+      "star": "ให้ดาวบน GitHub",
+      "share": "แชร์ให้เพื่อน",
+      "sponsor": "เป็นผู้สนับสนุน"
+    },
+    "footer": {
+      "made": "สร้างด้วย",
+      "by": "โดย",
+      "and": "และ",
+      "community": "ชุมชนโอเพนซอร์ส",
+      "copyright": "© {{year}} สงวนลิขสิทธิ์"
+    }
+  },
+  "converter": {
+    "title": "ตัวแปลงสื่อ",
+    "actions": {
+      "addNew": "เพิ่มใหม่",
+      "addFirst": "เพิ่มการแปลงแรก",
+      "stopAll": "หยุดทั้งหมด",
+      "clearHistory": "ล้างประวัติ",
+      "stop": "หยุด",
+      "delete": "ลบ",
+      "openFile": "เปิดไฟล์",
+      "openFolder": "เปิดโฟลเดอร์",
+      "showDetails": "แสดงรายละเอียด",
+      "hideDetails": "ซ่อนรายละเอียด"
+    },
+    "status": {
+      "active": "กำลังทำงาน",
+      "converting": "กำลังแปลง",
+      "waiting": "กำลังรอ",
+      "completed": "เสร็จสิ้น",
+      "failed": "ล้มเหลว",
+      "stopped": "หยุดแล้ว",
+      "loading": "กำลังโหลดรายการแปลง...",
+      "noConversions": "ไม่พบรายการแปลง",
+      "preparing": "กำลังเตรียมการ...",
+      "analyzing": "กำลังวิเคราะห์สื่อ...",
+      "finalizing": "กำลังเสร็จสิ้น..."
+    },
+    "search": {
+      "placeholder": "ค้นหารายการแปลง..."
+    },
+    "modal": {
+      "title": "เพิ่มการแปลงใหม่",
+      "input": "ไฟล์ต้นฉบับ",
+      "output": "ตำแหน่งไฟล์เป้าหมาย",
+      "selectFile": "เลือกไฟล์สื่อ",
+      "selectDestination": "เลือกโฟลเดอร์เป้าหมาย",
+      "mediaFiles": "ไฟล์สื่อ",
+      "browse": "เรียกดู",
+      "format": "รูปแบบเอาต์พุต",
+      "selectFormat": "เลือกรูปแบบ",
+      "qualityTitle": "ค่าคุณภาพที่ตั้งไว้",
+      "qualityHigh": "คุณภาพสูง",
+      "qualityMedium": "คุณภาพปานกลาง",
+      "qualityLow": "คุณภาพต่ำ",
+      "qualityCustom": "กำหนดเอง",
+      "videoSettings": "ตั้งค่าวิดีโอ",
+      "audioSettings": "ตั้งค่าเสียง",
+      "videoCodec": "ตัวเข้ารหัสวิดีโอ",
+      "audioCodec": "ตัวเข้ารหัสเสียง",
+      "encodingEngine": "เอนจินเข้ารหัส",
+      "audioEngine": "เอนจินเสียง",
+      "resolution": "ความละเอียด",
+      "videoBitrate": "บิตเรตวิดีโอ",
+      "audioBitrate": "บิตเรตเสียง",
+      "framerate": "เฟรมเรต",
+      "sampleRate": "อัตราการสุ่ม",
+      "channels": "ช่องเสียง",
+      "processing": "กำลังประมวลผล...",
+      "convert": "เริ่มการแปลง",
+      "cancel": "ยกเลิก"
+    },
+    "formats": {
+      "video": {
+        "mp4": {
+          "name": "MP4",
+          "description": "วิดีโอ MPEG-4"
+        },
+        "mkv": {
+          "name": "MKV",
+          "description": "วิดีโอ Matroska"
+        },
+        "webm": {
+          "name": "WebM",
+          "description": "รูปแบบวิดีโอเว็บ"
+        },
+        "avi": {
+          "name": "AVI",
+          "description": "รูปแบบ Audio Video Interleave"
+        }
+      },
+      "audio": {
+        "mp3": {
+          "name": "MP3",
+          "description": "เสียง MPEG Layer III"
+        },
+        "aac": {
+          "name": "AAC",
+          "description": "การเข้ารหัสเสียงขั้นสูง"
+        },
+        "wav": {
+          "name": "WAV",
+          "description": "เสียง Waveform"
+        },
+        "flac": {
+          "name": "FLAC",
+          "description": "การเข้ารหัสเสียงแบบไร้การสูญเสีย"
+        },
+        "opus": {
+          "name": "Opus",
+          "description": "เสียง Opus คุณภาพสูง"
+        }
+      }
+    },
+    "codecs": {
+      "video": {
+        "h264": {
+          "name": "H.264/AVC",
+          "description": "การเข้ารหัสวิดีโอขั้นสูง",
+          "engines": {
+            "cpu": "ซีพียู (ซอฟต์แวร์)",
+            "qsv": "Intel QuickSync",
+            "nvenc": "NVIDIA NVENC",
+            "amf": "AMD AMF"
+          }
+        },
+        "hevc": {
+          "name": "H.265/HEVC",
+          "description": "การเข้ารหัสวิดีโอประสิทธิภาพสูง",
+          "engines": {
+            "cpu": "ซีพียู (ซอฟต์แวร์)",
+            "qsv": "Intel QuickSync",
+            "nvenc": "NVIDIA NVENC",
+            "amf": "AMD AMF"
+          }
+        },
+        "av1": {
+          "name": "AV1",
+          "description": "การเข้ารหัสวิดีโอ AOMedia 1",
+          "engines": {
+            "cpu": "ซีพียู (SVT-AV1)",
+            "qsv": "Intel QuickSync",
+            "aom": "AOM อ้างอิง"
+          }
+        }
+      },
+      "audio": {
+        "aac": {
+          "name": "AAC",
+          "description": "การเข้ารหัสเสียงขั้นสูง",
+          "engines": {
+            "default": "FFmpeg AAC"
+          }
+        },
+        "opus": {
+          "name": "Opus",
+          "description": "ตัวเข้ารหัสเสียง Opus แบบโต้ตอบ",
+          "engines": {
+            "default": "libopus"
+          }
+        },
+        "mp3": {
+          "name": "MP3",
+          "description": "เสียง MPEG Layer III",
+          "engines": {
+            "default": "LAME MP3"
+          }
+        }
+      }
+    },
+    "channels": {
+      "mono": "โมโน (1)",
+      "stereo": "สเตอริโอ (2)",
+      "surround51": "เซอร์ราวด์ 5.1 (6)",
+      "surround71": "เซอร์ราวด์ 7.1 (8)"
+    },
+    "quality": {
+      "presets": {
+        "high": {
+          "name": "สูง",
+          "description": "คุณภาพดีที่สุด ไฟล์ใหญ่"
+        },
+        "medium": {
+          "name": "ปานกลาง",
+          "description": "สมดุลระหว่างคุณภาพและขนาด"
+        },
+        "low": {
+          "name": "ต่ำ",
+          "description": "ไฟล์ขนาดเล็ก คุณภาพลดลง"
+        }
+      }
+    },
+    "info": {
+      "resolution": "ความละเอียด",
+      "duration": "ความยาว",
+      "bitrate": "บิตเรต",
+      "codec": "ตัวเข้ารหัสปัจจุบัน",
+      "fileSize": "ขนาดไฟล์",
+      "framerate": "เฟรมเรต",
+      "sampleRate": "อัตราการสุ่ม",
+      "audioChannels": "ช่องเสียง",
+      "container": "รูปแบบคอนเทนเนอร์"
+    },
+    "tooltips": {
+      "addNew": "เพิ่มการแปลงใหม่",
+      "stopAll": "หยุดการแปลงที่กำลังทำงานทั้งหมด",
+      "clearHistory": "ล้างประวัติการแปลง",
+      "resolutionInfo": "ความละเอียดสูงขึ้น = คุณภาพดีขึ้นแต่ไฟล์ใหญ่ขึ้น",
+      "bitrateInfo": "บิตเรตสูงขึ้น = คุณภาพดีขึ้นแต่ไฟล์ใหญ่ขึ้น",
+      "engineInfo": "การเร่งความเร็วด้วยฮาร์ดแวร์ช่วยให้เข้ารหัสได้เร็วขึ้น",
+      "codecInfo": "ตัวเข้ารหัสแต่ละตัวมีข้อดีข้อเสียด้านคุณภาพและความเข้ากันได้",
+      "formatInfo": "เลือกรูปแบบเอาต์พุตตามความต้องการและความเข้ากันได้",
+      "qualityInfo": "สมดุลระหว่างคุณภาพและขนาดไฟล์"
+    },
+    "errors": {
+      "fileSelection": "เกิดข้อผิดพลาดในการเลือกไฟล์",
+      "destinationSelection": "เกิดข้อผิดพลาดในการเลือกโฟลเดอร์ปลายทาง",
+      "noFileSelected": "กรุณาเลือกไฟล์ต้นฉบับ",
+      "noFormatSelected": "กรุณาเลือกรูปแบบเอาต์พุต",
+      "noDestination": "กรุณาเลือกตำแหน่งเอาต์พุต",
+      "invalidResolution": "รูปแบบความละเอียดไม่ถูกต้อง (เช่น 1920x1080)",
+      "invalidBitrate": "รูปแบบบิตเรตไม่ถูกต้อง (เช่น 5000k)",
+      "invalidFramerate": "เฟรมเรตไม่ถูกต้อง (เช่น 60)",
+      "conversionFailed": "การแปลงล้มเหลว",
+      "unsupportedCodec": "ไม่รองรับตัวเข้ารหัสที่เลือกสำหรับรูปแบบนี้",
+      "insufficientSpace": "พื้นที่ดิสก์ไม่เพียงพอ",
+      "invalidFile": "ไฟล์ไม่ถูกต้องหรือเสียหาย",
+      "accessDenied": "ไม่สามารถเข้าถึงตำแหน่งเอาต์พุต",
+      "engineNotAvailable": "ไม่พบเอนจินเข้ารหัสที่เลือก"
+    },
+    "confirmations": {
+      "stopConversion": "คุณแน่ใจหรือไม่ที่จะหยุดการแปลงนี้?",
+      "stopAllConversions": "คุณแน่ใจหรือไม่ที่จะหยุดการแปลงที่กำลังทำงานทั้งหมด?",
+      "clearHistory": "คุณแน่ใจหรือไม่ที่จะล้างประวัติการแปลง?",
+      "clearActiveWarning": "มีการแปลงที่กำลังทำงานอยู่ คุณแน่ใจหรือไม่ที่จะล้างประวัติ?",
+      "deleteConversion": "คุณแน่ใจหรือไม่ที่จะลบการแปลงนี้ออกจากประวัติ?"
+    },
+    "progress": {
+      "preparing": "กำลังเตรียมการแปลง...",
+      "analyzing": "กำลังวิเคราะห์สื่อ...",
+      "converting": "กำลังแปลง: {progress}%",
+      "finalizing": "กำลังเสร็จสิ้น...",
+      "estimatedTime": "เวลาที่เหลือ: {time}",
+      "processingSpeed": "ความเร็ว: {speed}"
+    }
+  },
+  "menu": {
+    "file": {
+      "title": "ไฟล์",
+      "newProject": "โปรเจกต์ใหม่",
+      "openProject": "เปิดโปรเจกต์",
+      "openRecent": "เปิดล่าสุด",
+      "save": "บันทึก",
+      "saveAs": "บันทึกเป็น...",
+      "export": "ส่งออก",
+      "projectSettings": "ตั้งค่าโปรเจกต์",
+      "exit": "ออก"
+    },
+    "edit": {
+      "title": "แก้ไข",
+      "undo": "เลิกทำ",
+      "redo": "ทำซ้ำ",
+      "cut": "ตัด",
+      "copy": "คัดลอก",
+      "paste": "วาง",
+      "delete": "ลบ",
+      "selectAll": "เลือกทั้งหมด",
+      "deselect": "ยกเลิกการเลือก",
+      "preferences": "การตั้งค่า"
+    },
+    "view": {
+      "title": "มุมมอง",
+      "zoomIn": "ขยายเข้า",
+      "zoomOut": "ขยายออก",
+      "resetZoom": "รีเซ็ตการขยาย",
+      "toggleFullscreen": "สลับเต็มจอ",
+      "showSidebar": "แสดงแถบข้าง",
+      "showConsole": "แสดงคอนโซล",
+      "showStatusBar": "แสดงแถบสถานะ",
+      "theme": {
+        "title": "ธีม",
+        "light": "สว่าง",
+        "dark": "มืด",
+        "system": "ระบบ"
+      }
+    },
+    "tools": {
+      "title": "เครื่องมือ",
+      "downloadManager": "ตัวจัดการดาวน์โหลด",
+      "batchConverter": "ตัวแปลงไฟล์แบบกลุ่ม",
+      "audioExtractor": "ตัวแยกเสียง",
+      "videoRemuxer": "ตัวแปลงวิดีโอ",
+      "formatSettings": "ตั้งค่ารูปแบบ",
+      "qualityPresets": "ค่าคุณภาพที่ตั้งไว้",
+      "developerTools": "เครื่องมือนักพัฒนา"
+    },
+    "more": {
+      "title": "เพิ่มเติม",
+      "checkUpdates": "ตรวจสอบการอัพเดท",
+      "documentation": "เอกสารประกอบ",
+      "keyboardShortcuts": "ปุ่มลัดคีย์บอร์ด",
+      "reportIssue": "รายงานปัญหา",
+      "supportForum": "ฟอรั่มช่วยเหลือ",
+      "about": "เกี่ยวกับ"
+    }
+  },
+  "tour": {
+    "welcome": {
+      "title": "ยินดีต้อนรับสู่ MDU",
+      "description": "มาทำความรู้จักกับฟีเจอร์หลักและเริ่มต้นการดาวน์โหลดสื่อกัน"
+    },
+    "downloads": {
+      "title": "จัดการการดาวน์โหลด",
+      "description": "จัดการการดาวน์โหลดได้ง่าย ติดตามความคืบหน้า และจัดระเบียบไฟล์สื่อของคุณ"
+    },
+    "browser": {
+      "title": "เบราว์เซอร์ในตัว",
+      "description": "เรียกดูและดาวน์โหลดเนื้อหาได้โดยตรงภายในแอพด้วยเบราว์เซอร์ในตัว"
+    },
+    "output": {
+      "title": "โฟลเดอร์เก็บไฟล์",
+      "description": "เลือกที่เก็บไฟล์ดาวน์โหลดและจัดระเบียบตามหมวดหมู่"
+    },
+    "settings": {
+      "title": "การตั้งค่า",
+      "description": "ปรับแต่งแอพตามความต้องการด้วยการตั้งค่าการดาวน์โหลดและเครือข่ายต่างๆ"
+    },
+    "proxy": {
+      "title": "รองรับพร็อกซี่",
+      "description": "ใช้พร็อกซี่เพื่อดาวน์โหลดเนื้อหาจากเว็บไซต์ที่จำกัดภูมิภาค"
+    },
+    "api": {
+      "title": "การเชื่อมต่อ API",
+      "description": "เชื่อมต่อกับบริการต่างๆ โดยใช้ API keys เพื่อฟังก์ชันการทำงานที่เพิ่มขึ้น"
+    },
+    "next": "ถัดไป",
+    "finish": "เริ่มต้นใช้งาน",
+    "skip": "ข้ามการแนะนำ"
+  },
+  "stemExtractor": {
+    "title": "แยกแทร็คด้วย AI",
+    "subtitle": "แยกแทร็คเสียงระดับมืออาชีพ",
+    "description": "แยกเพลงของคุณเป็นแทร็คเครื่องดนตรีแต่ละชิ้นด้วยเทคโนโลยี AI ล่าสุด",
+    "extract": "แยกแทร็ค",
+    "dropzone": {
+      "title": "อัพโหลดไฟล์เสียง",
+      "placeholder": "ลากไฟล์เสียงมาวางที่นี่หรือคลิกเพื่อเลือก",
+      "dragActive": "วางไฟล์ที่นี่...",
+      "browse": "เลือกไฟล์",
+      "or": "หรือ",
+      "dragHere": "ลากและวางไฟล์ที่นี่",
+      "maxSize": "ขนาดไฟล์สูงสุด: 500MB",
+      "supportedFormats": "รองรับไฟล์: MP3, WAV, FLAC, OGG, M4A"
+    },
+    "preview": {
+      "title": "ตัวอย่างเสียง",
+      "waveform": "การแสดงคลื่นเสียง",
+      "play": "เล่น",
+      "pause": "หยุดชั่วคราว",
+      "stop": "หยุด",
+      "loading": "กำลังโหลดเสียง...",
+      "noPreview": "ไม่สามารถแสดงตัวอย่างได้",
+      "duration": "ความยาว",
+      "currentTime": "เวลาปัจจุบัน",
+      "remainingTime": "เวลาที่เหลือ"
+    },
+    "settings": {
+      "title": "ตั้งค่าการแยกเสียง",
+      "subtitle": "กำหนดค่าการแยกแทร็ค",
+      "model": "โมเดล AI",
+      "stems": {
+        "label": "การแยกแทร็ค",
+        "description": "เลือกวิธีการแยกแทร็ค",
+        "options": {
+          "2stems": {
+            "label": "2 แทร็ค",
+            "description": "เสียงร้อง + ดนตรี"
+          },
+          "4stems": {
+            "label": "4 แทร็ค",
+            "description": "เสียงร้อง + กลอง + เบส + อื่นๆ"
+          },
+          "5stems": {
+            "label": "5 แทร็ค",
+            "description": "เสียงร้อง + กลอง + เบส + เปียโน + อื่นๆ"
+          }
+        }
+      },
+      "splits":"แยกแทร็ค",
+      "advanced": {
+        "label": "การตั้งค่าขั้นสูง",
+        "segments": "ความยาวเซกเมนต์",
+        "shifts": "การเลื่อน",
+        "overlap": "การซ้อนทับ",
+        "normalize": "ปรับระดับเสียงให้สมดุล",
+        "denoise": "ลดเสียงรบกวน",
+        "quality": {
+          "label": "คุณภาพเอาต์พุต",
+          "options": {
+            "low": "ต่ำ (เร็ว)",
+            "medium": "ปานกลาง (สมดุล)",
+            "high": "สูง (ช้า)"
+          }
+        }
+      }
+    },
+    "processing": {
+      "title": "กำลังประมวลผลเสียง",
+      "status": "กำลังประมวลผล: {progress}%",
+      "estimated": "เวลาที่เหลือโดยประมาณ: {time}",
+      "phases": {
+        "preparing": "กำลังเตรียมไฟล์เสียง...",
+        "analyzing": "กำลังวิเคราะห์แทร็ค...",
+        "separating": "กำลังแยกแทร็ค...",
+        "processing": "กำลังประมวลผลแทร็ค...",
+        "finishing": "กำลังเสร็จสิ้น...",
+        "exporting": "กำลังส่งออกไฟล์..."
+      },
+      "cancel": "ยกเลิกการประมวลผล",
+      "pause": "หยุดการประมวลผลชั่วคราว",
+      "resume": "ดำเนินการต่อ"
+    },
+    "fileInfo": {
+      "title": "ข้อมูลไฟล์",
+      "name": "ชื่อไฟล์",
+      "size": "ขนาดไฟล์",
+      "type": "ประเภทไฟล์",
+      "duration": "ความยาว",
+      "format": "รูปแบบ",
+      "bitrate": "บิตเรต",
+      "sampleRate": "อัตราการสุ่ม",
+      "channels": "จำนวนแชนแนล",
+      "created": "วันที่สร้าง",
+      "modified": "แก้ไขล่าสุด",
+      "location": "ตำแหน่ง"
+    },
+  
+    "features": {
+      "quality": {
+        "title": "การแยกเสียงคุณภาพสูง",
+        "description": "โมเดล AI ที่ทันสมัยสำหรับการแยกเสียงที่คมชัด ปราศจากสัญญาณรบกวน"
+      },
+      "ai": {
+        "title": "การประมวลผล AI ขั้นสูง",
+        "description": "หลากหลายโมเดล AI ที่ปรับแต่งมาสำหรับดนตรีแต่ละประเภท"
+      },
+      "format": {
+        "title": "รองรับหลายรูปแบบไฟล์",
+        "description": "สนับสนุนไฟล์เสียงหลากหลายรูปแบบและการตั้งค่าคุณภาพ"
+      },
+      "batch": {
+        "title": "ประมวลผลหลายไฟล์",
+        "description": "ประมวลผลหลายไฟล์พร้อมกัน"
+      },
+      "realtime": {
+        "title": "ตัวอย่างแบบเรียลไทม์",
+        "description": "ดูตัวอย่างแทร็คที่แยกก่อนการประมวลผล"
+      },
+      "export": {
+        "title": "การส่งออกที่ยืดหยุ่น",
+        "description": "ส่งออกในหลายรูปแบบและการตั้งค่าคุณภาพ"
+      }
+    },
+  
+    "actions": {
+      "extract": "เริ่มการแยกเสียง",
+      "cancel": "ยกเลิก",
+      "clear": "ล้าง",
+      "save": "บันทึก",
+      "download": "ดาวน์โหลด",
+      "preview": "ดูตัวอย่าง",
+      "settings": "ตั้งค่า",
+      "back": "ย้อนกลับ",
+      "next": "ถัดไป",
+      "finish": "เสร็จสิ้น",
+      "retry": "ลองใหม่",
+      "reset": "รีเซ็ต",
+      "browse": "เลือกไฟล์"
+    },
+  
+    "results": {
+      "title": "แทร็คที่แยกแล้ว",
+      "vocals": "เสียงร้อง",
+      "drums": "กลอง",
+      "bass": "เบส",
+      "piano": "เปียโน",
+      "other": "เครื่องดนตรีอื่นๆ",
+      "instrumental": "ดนตรี",
+      "accompaniment": "ดนตรีประกอบ",
+      "download": {
+        "all": "ดาวน์โหลดทั้งหมด",
+        "individual": "ดาวน์โหลดแต่ละแทร็ค",
+        "format": "รูปแบบการดาวน์โหลด",
+        "quality": "คุณภาพการดาวน์โหลด"
+      }
+    },
+  
+    "success": {
+      "title": "แยกเสียงเสร็จสมบูรณ์",
+      "description": "แยกแทร็คของคุณเสร็จเรียบร้อยแล้ว",
+      "downloadReady": "ไฟล์ของคุณพร้อมให้ดาวน์โหลด",
+      "processed": "ประมวลผล {filename} เสร็จสมบูรณ์",
+      "saved": "บันทึกการตั้งค่าเรียบร้อยแล้ว",
+      "exported": "ส่งออกไฟล์เรียบร้อยแล้ว"
+    },
+  
+    "error": {
+      "title": "การแยกเสียงล้มเหลว",
+      "description": "เกิดข้อผิดพลาดระหว่างการแยกแทร็ค",
+      "types": {
+        "invalidFile": "ไฟล์ไม่ถูกต้อง",
+        "audioOnly": "กรุณาเลือกไฟล์เสียงเท่านั้น",
+        "tooLarge": "ไฟล์มีขนาดใหญ่เกินไป",
+        "unsupported": "รูปแบบไฟล์เสียงไม่รองรับ",
+        "processing": "ข้อผิดพลาดในการประมวลผล",
+        "network": "ข้อผิดพลาดเครือข่าย",
+        "server": "ข้อผิดพลาดเซิร์ฟเวอร์",
+        "unknown": "ข้อผิดพลาดที่ไม่ทราบสาเหตุ"
+      },
+      "messages": {
+        "fileSize": "ขนาดไฟล์เกินขีดจำกัดสูงสุด {size}",
+        "format": "รูปแบบไฟล์ {format} ไม่รองรับ",
+        "network": "โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ต",
+        "server": "เซิร์ฟเวอร์ไม่พร้อมใช้งานในขณะนี้",
+        "generic": "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง"
+      }
+    },
+  
+    "help": {
+      "title": "วิธีใช้และเคล็ดลับ",
+      "bestPractices": "แนวทางปฏิบัติที่ดีที่สุด",
+      "tips": [
+        "ใช้ไฟล์ต้นฉบับคุณภาพสูงเพื่อผลลัพธ์ที่ดีที่สุด",
+        "เวลาประมวลผลที่นานขึ้นมักให้คุณภาพที่ดีกว่า",
+        "การแยก 4 แทร็คเหมาะสมที่สุดสำหรับเพลงส่วนใหญ่",
+        "เปิดใช้งานการลดเสียงรบกวนเพื่อเอาต์พุตที่คมชัดขึ้น"
+      ],
+      "faq": {
+        "title": "คำถามที่พบบ่อย",
+        "items": {
+          "quality": {
+            "q": "โมเดลใดให้คุณภาพดีที่สุด?",
+            "a": "HTDemucs มักให้คุณภาพการแยกเสียงที่ดีที่สุดโดยรวม"
+          },
+          "time": {
+            "q": "ใช้เวลาในการประมวลผลนานเท่าไร?",
+            "a": "เวลาประมวลผลขึ้นอยู่กับความยาวไฟล์และคุณภาพที่เลือก"
+          },
+          "format": {
+            "q": "รองรับไฟล์รูปแบบใดบ้าง?",
+            "a": "เรารองรับไฟล์ MP3, WAV, FLAC, OGG และ M4A"
+          }
+        }
+      }
+    }
+  }
+}

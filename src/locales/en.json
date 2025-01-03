@@ -1,0 +1,987 @@
+{
+  "app": {
+    "name": "Media Downloader Utility",
+    "status": {
+      "ready": "Ready"
+    }
+  },
+  "navigation": {
+    "downloader": "Downloader",
+    "converter": "Converter",
+    "stemExtractor": "Stem Extractor",
+    "remux": "Remux",
+    "settings": "Settings"
+  },
+  "downloads": {
+    "title": "Downloads",
+    "addModal": {
+      "title": "Add Download",
+      "urlPlaceholder": "Enter YouTube URL",
+      "fetch": "Fetch Info",
+      "selectFormat": "Select Format",
+      "download": "Download",
+      "videoInfo": "Video Information",
+      "quality": "Quality",
+      "size": "Size",
+      "format": "Format",
+      "encodingOptions": "Encoding Options",
+      "audioQuality": "Audio Quality",
+      "videoQuality": "Video Quality",
+      "outputFormat": "Output Format",
+      "audioQualityHint": "Audio bitrate in kbps",
+      "videoQualityHint": "Video resolution",
+      "outputFormatHint": "Container format"
+    },
+    "actions": {
+      "addDownload": "Add Download",
+      "stopAll": "Stop All",
+      "clearHistory": "Clear History",
+      "stop": "Stop",
+      "remove": "Remove",
+      "retry": "Retry",
+      "addFirst": "Add First Download",
+      "openFolder": "Open Folder",
+      "settings": "Settings"
+    },
+    "status": {
+      "loading": "Loading...",
+      "noDownloads": "No downloads available",
+      "noDownloadsDesc": "Start by adding a new download",
+      "completed": "Completed",
+      "downloading": "Downloading",
+      "stopped": "Stopped",
+      "failed": "Failed",
+      "waiting": "Waiting"
+    },
+    "search": {
+      "placeholder": "Search downloads"
+    },
+    "errors": {
+      "emptyUrl": "Please enter a URL",
+      "invalidUrl": "Invalid URL",
+      "fetchError": "Failed to fetch video information",
+      "downloadError": "Download failed",
+      "networkError": "Network error",
+      "unsupportedFormat": "Unsupported format"
+    },
+    "format": {
+      "quality": "Quality",
+      "size": "Size",
+      "type": "Type",
+      "video": "Video",
+      "audio": "Audio",
+      "unknown": "Unknown",
+      "bestQuality": "Best Quality",
+      "highestRes": "Highest Resolution",
+      "lowestRes": "Lowest Resolution",
+      "audioOnly": "Audio Only"
+    },
+    "info": {
+      "duration": "Duration",
+      "uploader": "Uploader",
+      "views": "Views",
+      "uploadDate": "Upload Date",
+      "resolution": "Resolution",
+      "bitrate": "Bitrate",
+      "codec": "Codec",
+      "container": "Container"
+    },
+    "progress": {
+      "speed": "Speed",
+      "eta": "Time remaining",
+      "downloaded": "Downloaded",
+      "total": "Total",
+      "percentage": "Progress"
+    }
+  },
+  "common": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Information",
+    "confirm": "Confirm",
+    "apply": "Apply",
+    "reset": "Reset",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "back": "Back",
+    "next": "Next",
+    "done": "Done",
+    "retry": "Retry",
+    "settings": "Settings"
+  },
+  "settings": {
+    "title": "Settings",
+    "sections": {
+      "general": "General",
+      "media": "Media",
+      "advanced": "Advanced",
+      "about": "About"
+    },
+    "tabs": {
+      "general": "General",
+      "language": "Language",
+      "appearance": "Appearance",
+      "directories": "Directories",
+      "downloads": "Downloads",
+      "audio": "Audio",
+      "video": "Video",
+      "network": "Network",
+      "privacy": "Privacy",
+      "advanced": "Advanced",
+      "about": "About"
+    },
+    "general": {
+      "title": "General Settings",
+      "startup": {
+        "title": "Startup",
+        "launchAtStartup": "Launch at startup",
+        "launchAtStartupDescription": "Automatically start the application when your computer starts",
+        "minimizeToTray": "Minimize to tray",
+        "minimizeToTrayDescription": "Keep the application running in the system tray when closed"
+      },
+      "updates": {
+        "title": "Updates",
+        "autoUpdate": "Automatic updates",
+        "autoUpdateDescription": "Automatically download and install updates",
+        "checkForUpdates": "Check for updates",
+        "currentVersion": "Current version"
+      },
+      "performance": {
+        "title": "Performance",
+        "hardwareAcceleration": "Hardware acceleration",
+        "hardwareAccelerationDescription": "Use GPU acceleration for better performance",
+        "processPriority": "Process priority",
+        "processPriorityDescription": "Set the application's process priority"
+      }
+    },
+    "language": {
+      "title": "Language Settings",
+      "display": "Display language",
+      "displayDescription": "Choose your preferred language",
+      "region": "Region format",
+      "regionDescription": "Date, time and number formats"
+    },
+    "appearance": {
+      "title": "Appearance Settings",
+      "theme": {
+        "title": "Theme",
+        "options": {
+          "light": "Light",
+          "dark": "Dark",
+          "system": "System"
+        }
+      },
+      "viewMode": {
+        "title": "View Mode",
+        "options": {
+          "grid": "Grid",
+          "list": "List",
+          "compact": "Compact"
+        }
+      },
+      "thumbnailSize": {
+        "title": "Thumbnail Size",
+        "options": {
+          "small": "Small",
+          "medium": "Medium",
+          "large": "Large"
+        }
+      },
+      "additional": {
+        "title": "Additional Options",
+        "showTitles": "Show titles under covers",
+        "animateCovers": "Animate covers on hover"
+      }
+    },
+    "directories": {
+      "title": "Directory Settings",
+      "downloads": {
+        "title": "Downloads Location",
+        "default": "Default downloads folder",
+        "custom": "Custom location",
+        "select": "Select folder"
+      },
+      "organization": {
+        "title": "File Organization",
+        "createSubfolders": "Create subfolders by type",
+        "useArtistName": "Use artist name in folder structure"
+      }
+    },
+    "downloads": {
+      "title": "Download Settings",
+      "concurrent": {
+        "title": "Concurrent Downloads",
+        "limit": "Maximum concurrent downloads",
+        "description": "Number of files to download simultaneously"
+      },
+      "bandwidth": {
+        "title": "Bandwidth",
+        "limit": "Speed limit",
+        "unlimited": "Unlimited"
+      },
+      "completion": {
+        "title": "On Completion",
+        "notification": "Show notification",
+        "sound": "Play sound",
+        "openFolder": "Open folder"
+      }
+    },
+    "audio": {
+      "title": "Audio Settings",
+      "quality": {
+        "title": "Quality",
+        "format": "Default format",
+        "bitrate": "Default bitrate"
+      },
+      "metadata": {
+        "title": "Metadata",
+        "embedArtwork": "Embed artwork",
+        "embedLyrics": "Embed lyrics",
+        "preserveTags": "Preserve existing tags"
+      }
+    },
+    "video": {
+      "title": "Video Settings",
+      "quality": {
+        "title": "Quality",
+        "resolution": "Default resolution",
+        "format": "Default format",
+        "codec": "Preferred codec"
+      },
+      "advanced": {
+        "title": "Advanced",
+        "hardware": "Hardware encoding",
+        "thumbnails": "Download thumbnails"
+      }
+    },
+    "network": {
+      "title": "Network Settings",
+      "proxy": {
+        "title": "Proxy",
+        "description": "Configure proxy server settings",
+        "enable": "Enable proxy",
+        "host": "Host",
+        "hostPlaceholder": "proxy.example.com",
+        "port": "Port"
+      },
+      "connection": {
+        "title": "Connection",
+        "description": "Configure connection parameters",
+        "timeout": "Connection timeout",
+        "timeoutDescription": "Timeout in seconds",
+        "retries": "Maximum retries",
+        "retriesDescription": "Number of connection attempts"
+      }
+    },
+    "privacy": {
+      "title": "Privacy Settings",
+      "data": {
+        "title": "Data Collection",
+        "analytics": "Enable analytics",
+        "crashReports": "Send crash reports"
+      },
+      "history": {
+        "title": "History",
+        "keep": "Keep download history",
+        "clear": "Clear history"
+      }
+    },
+    "advanced": {
+      "title": "Advanced Settings",
+      "experimental": {
+        "title": "Experimental Features",
+        "warning": "These features may be unstable",
+        "enable": "Enable experimental features"
+      },
+      "debugging": {
+        "title": "Debugging",
+        "verbose": "Verbose logging",
+        "console": "Show developer console"
+      }
+    },
+    "about": {
+      "title": "About",
+      "version": "Version",
+      "credits": "Credits",
+      "license": "License",
+      "updates": {
+        "title": "Updates",
+        "check": "Check for updates",
+        "current": "Current version",
+        "available": "Update available"
+      },
+      "links": {
+        "website": "Website",
+        "github": "GitHub",
+        "donate": "Donate"
+      }
+    }
+  },
+  "status": {
+    "ready": "Ready",
+    "app_version": "App Version",
+    "os": "OS",
+    "cpu": "CPU",
+    "memory": "Memory",
+    "error": {
+      "loading": "Error loading system information",
+      "update": "Error updating system status"
+    },
+    "performance": {
+      "usage": "Usage",
+      "total": "Total",
+      "available": "Available",
+      "speed": "Speed"
+    }
+  },
+  "sidebar": {
+    "categories": {
+      "title": "Categories",
+      "downloads": "Downloads",
+      "queue": "Queue",
+      "completed": "Completed"
+    },
+    "drives": {
+      "title": "Drives",
+      "refresh": "Refresh drives",
+      "loading": "Loading drives...",
+      "free": "free",
+      "total": "total",
+      "error": {
+        "loading": "Failed to load drives"
+      }
+    },
+    "network": {
+      "title": "Network",
+      "speed": "Speed",
+      "download": "Download",
+      "upload": "Upload",
+      "total": "Total"
+    }
+  },
+  "about": {
+    "app": {
+      "title": "Media Downloader Utility",
+      "subtitle": "Manga downloading and reading application",
+      "version": "Version",
+      "build": "Build",
+      "date": "Build Date",
+      "platform": "System Information",
+      "os": "Operating System",
+      "arch": "Architecture",
+      "commit": "Commit Hash",
+      "channels": {
+        "title": "Update Channel",
+        "stable": "Stable",
+        "beta": "Beta",
+        "nightly": "Nightly"
+      }
+    },
+    "update": {
+      "title": "Updates",
+      "check": "Check for Updates",
+      "checking": "Checking for updates...",
+      "available": "New version {{version}} available",
+      "latest": "You are using the latest version",
+      "error": "Failed to check for updates",
+      "notes": "Release Notes",
+      "download": "Download Update",
+      "restart": "Restart to Update",
+      "progress": "Downloading update...",
+      "status": {
+        "checking": "Checking for updates...",
+        "downloading": "Downloading update...",
+        "installing": "Installing update...",
+        "ready": "Ready to restart"
+      }
+    },
+    "links": {
+      "title": "Quick Links",
+      "github": "GitHub",
+      "website": "Website",
+      "issues": "Report Issues",
+      "discord": "Discord Community"
+    },
+    "help": {
+      "title": "Help & Support",
+      "documentation": "Documentation",
+      "report": "Report an Issue",
+      "discord": "Join Discord Community",
+      "faq": "FAQ",
+      "contribute": "How to Contribute"
+    },
+    "legal": {
+      "title": "Legal & Credits",
+      "license": "License",
+      "credits": "Credits",
+      "third_party": "Third-party Licenses",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service"
+    },
+    "support": {
+      "title": "Support Development",
+      "description": "Consider supporting the project if you find it useful",
+      "donate": "Buy me a coffee",
+      "star": "Star on GitHub",
+      "share": "Share with Friends",
+      "sponsor": "Become a Sponsor"
+    },
+    "footer": {
+      "made": "Made with",
+      "by": "by",
+      "and": "and",
+      "community": "the open source community",
+      "copyright": "© {{year}} All rights reserved"
+    }
+  },
+  "converter": {
+    "title": "Media Converter",
+    "actions": {
+      "addNew": "Add New",
+      "addFirst": "Add First Conversion",
+      "stopAll": "Stop All",
+      "clearHistory": "Clear History",
+      "stop": "Stop",
+      "delete": "Delete",
+      "openFile": "Open File",
+      "openFolder": "Open Folder",
+      "showDetails": "Show Details",
+      "hideDetails": "Hide Details"
+    },
+    "status": {
+      "active": "active",
+      "converting": "Converting",
+      "waiting": "Waiting",
+      "completed": "Completed",
+      "failed": "Failed",
+      "stopped": "Stopped",
+      "loading": "Loading conversions...",
+      "noConversions": "No conversions found",
+      "preparing": "Preparing...",
+      "analyzing": "Analyzing media...",
+      "finalizing": "Finalizing..."
+    },
+    "search": {
+      "placeholder": "Search conversions..."
+    },
+    "modal": {
+      "title": "Add New Conversion",
+      "input": "Input File",
+      "output": "Output Location",
+      "selectFile": "Select media file",
+      "selectDestination": "Select output folder",
+      "mediaFiles": "Media Files",
+      "browse": "Browse",
+      "format": "Output Format",
+      "selectFormat": "Select format",
+      "qualityTitle": "Quality Preset",
+      "qualityHigh": "High Quality",
+      "qualityMedium": "Medium Quality",
+      "qualityLow": "Low Quality",
+      "qualityCustom": "Custom",
+      "videoSettings": "Video Settings",
+      "audioSettings": "Audio Settings",
+      "videoCodec": "Video Codec",
+      "audioCodec": "Audio Codec",
+      "encodingEngine": "Encoding Engine",
+      "audioEngine": "Audio Engine",
+      "resolution": "Resolution",
+      "videoBitrate": "Video Bitrate",
+      "audioBitrate": "Audio Bitrate",
+      "framerate": "Frame Rate",
+      "sampleRate": "Sample Rate",
+      "channels": "Audio Channels",
+      "processing": "Processing...",
+      "convert": "Start Conversion",
+      "cancel": "Cancel"
+    },
+    "formats": {
+      "video": {
+        "mp4": {
+          "name": "MP4",
+          "description": "MPEG-4 Video"
+        },
+        "mkv": {
+          "name": "MKV",
+          "description": "Matroska Video"
+        },
+        "webm": {
+          "name": "WebM",
+          "description": "Web Video Format"
+        },
+        "avi": {
+          "name": "AVI",
+          "description": "Audio Video Interleave"
+        }
+      },
+      "audio": {
+        "mp3": {
+          "name": "MP3",
+          "description": "MPEG Audio Layer III"
+        },
+        "aac": {
+          "name": "AAC",
+          "description": "Advanced Audio Coding"
+        },
+        "wav": {
+          "name": "WAV",
+          "description": "Waveform Audio"
+        },
+        "flac": {
+          "name": "FLAC",
+          "description": "Free Lossless Audio Codec"
+        },
+        "opus": {
+          "name": "Opus",
+          "description": "Opus Interactive Audio"
+        }
+      }
+    },
+    "codecs": {
+      "video": {
+        "h264": {
+          "name": "H.264/AVC",
+          "description": "Advanced Video Coding",
+          "engines": {
+            "cpu": "CPU (Software)",
+            "qsv": "Intel QuickSync",
+            "nvenc": "NVIDIA NVENC",
+            "amf": "AMD AMF"
+          }
+        },
+        "hevc": {
+          "name": "H.265/HEVC",
+          "description": "High Efficiency Video Coding",
+          "engines": {
+            "cpu": "CPU (Software)",
+            "qsv": "Intel QuickSync",
+            "nvenc": "NVIDIA NVENC",
+            "amf": "AMD AMF"
+          }
+        },
+        "av1": {
+          "name": "AV1",
+          "description": "AOMedia Video 1",
+          "engines": {
+            "cpu": "CPU (SVT-AV1)",
+            "qsv": "Intel QuickSync",
+            "aom": "AOM Reference"
+          }
+        }
+      },
+      "audio": {
+        "aac": {
+          "name": "AAC",
+          "description": "Advanced Audio Coding",
+          "engines": {
+            "default": "FFmpeg AAC"
+          }
+        },
+        "opus": {
+          "name": "Opus",
+          "description": "Opus Interactive Audio Codec",
+          "engines": {
+            "default": "libopus"
+          }
+        },
+        "mp3": {
+          "name": "MP3",
+          "description": "MPEG Audio Layer III",
+          "engines": {
+            "default": "LAME MP3"
+          }
+        }
+      }
+    },
+    "channels": {
+      "mono": "Mono (1)",
+      "stereo": "Stereo (2)",
+      "surround51": "5.1 Surround (6)",
+      "surround71": "7.1 Surround (8)"
+    },
+    "quality": {
+      "presets": {
+        "high": {
+          "name": "High",
+          "description": "Best quality, larger file size"
+        },
+        "medium": {
+          "name": "Medium",
+          "description": "Balanced quality and size"
+        },
+        "low": {
+          "name": "Low",
+          "description": "Smaller file size, reduced quality"
+        }
+      }
+    },
+    "info": {
+      "resolution": "Resolution",
+      "duration": "Duration",
+      "bitrate": "Bitrate",
+      "codec": "Current Codec",
+      "fileSize": "File Size",
+      "framerate": "Frame Rate",
+      "sampleRate": "Sample Rate",
+      "audioChannels": "Audio Channels",
+      "container": "Container Format"
+    },
+    "tooltips": {
+      "addNew": "Add new conversion",
+      "stopAll": "Stop all active conversions",
+      "clearHistory": "Clear conversion history",
+      "resolutionInfo": "Higher resolution means better quality but larger file size",
+      "bitrateInfo": "Higher bitrate means better quality but larger file size",
+      "engineInfo": "Hardware acceleration can provide faster encoding",
+      "codecInfo": "Different codecs offer various quality and compatibility trade-offs",
+      "formatInfo": "Choose output format based on your needs and compatibility",
+      "qualityInfo": "Balance between quality and file size"
+    },
+    "errors": {
+      "fileSelection": "Error selecting file",
+      "destinationSelection": "Error selecting destination folder",
+      "noFileSelected": "Please select an input file",
+      "noFormatSelected": "Please select an output format",
+      "noDestination": "Please select an output location",
+      "invalidResolution": "Invalid resolution format (e.g., 1920x1080)",
+      "invalidBitrate": "Invalid bitrate format (e.g., 5000k)",
+      "invalidFramerate": "Invalid frame rate (e.g., 60)",
+      "conversionFailed": "Conversion failed to start",
+      "unsupportedCodec": "Selected codec is not supported for this format",
+      "insufficientSpace": "Insufficient disk space",
+      "invalidFile": "Invalid or corrupted input file",
+      "accessDenied": "Access denied to output location",
+      "engineNotAvailable": "Selected encoding engine is not available"
+    },
+    "confirmations": {
+      "stopConversion": "Are you sure you want to stop this conversion?",
+      "stopAllConversions": "Are you sure you want to stop all active conversions?",
+      "clearHistory": "Are you sure you want to clear the conversion history?",
+      "clearActiveWarning": "There are active conversions. Are you sure you want to clear the history?",
+      "deleteConversion": "Are you sure you want to delete this conversion from history?"
+    },
+    "progress": {
+      "preparing": "Preparing conversion...",
+      "analyzing": "Analyzing media...",
+      "converting": "Converting: {progress}%",
+      "finalizing": "Finalizing...",
+      "estimatedTime": "Estimated time: {time}",
+      "processingSpeed": "Speed: {speed}"
+    }
+  },
+  "menu": {
+    "file": {
+      "title": "File",
+      "newProject": "New Project",
+      "openProject": "Open Project",
+      "openRecent": "Open Recent",
+      "save": "Save",
+      "saveAs": "Save As...",
+      "export": "Export",
+      "projectSettings": "Project Settings",
+      "exit": "Exit"
+    },
+    "edit": {
+      "title": "Edit",
+      "undo": "Undo",
+      "redo": "Redo",
+      "cut": "Cut",
+      "copy": "Copy",
+      "paste": "Paste",
+      "delete": "Delete",
+      "selectAll": "Select All",
+      "deselect": "Deselect",
+      "preferences": "Preferences"
+    },
+    "view": {
+      "title": "View",
+      "zoomIn": "Zoom In",
+      "zoomOut": "Zoom Out",
+      "resetZoom": "Reset Zoom",
+      "toggleFullscreen": "Toggle Fullscreen",
+      "showSidebar": "Show Sidebar",
+      "showConsole": "Show Console",
+      "showStatusBar": "Show Status Bar",
+      "theme": {
+        "title": "Theme",
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+      }
+    },
+    "tools": {
+      "title": "Tools",
+      "downloadManager": "Download Manager",
+      "batchConverter": "Batch Converter",
+      "audioExtractor": "Audio Extractor",
+      "videoRemuxer": "Video Remuxer",
+      "formatSettings": "Format Settings",
+      "qualityPresets": "Quality Presets",
+      "developerTools": "Developer Tools"
+    },
+    "more": {
+      "title": "More",
+      "checkUpdates": "Check for Updates",
+      "documentation": "Documentation",
+      "keyboardShortcuts": "Keyboard Shortcuts",
+      "reportIssue": "Report Issue",
+      "supportForum": "Support Forum",
+      "about": "About"
+    }
+  },
+  "tour": {
+    "welcome": {
+      "title": "Welcome to MDU",
+      "description": "Let's take a quick tour of the main features and get you started with downloading media."
+    },
+    "downloads": {
+      "title": "Downloads Management",
+      "description": "Easily manage your downloads, track progress, and organize your media files."
+    },
+    "browser": {
+      "title": "Built-in Browser",
+      "description": "Browse and download content directly within the app using our integrated browser."
+    },
+    "output": {
+      "title": "Output Directory",
+      "description": "Choose where to save your downloads and organize them by categories."
+    },
+    "settings": {
+      "title": "Settings",
+      "description": "Customize the app to your needs with various download and network settings."
+    },
+    "proxy": {
+      "title": "Proxy Support",
+      "description": "Use proxies to download content from region-restricted websites."
+    },
+    "api": {
+      "title": "API Integration",
+      "description": "Connect with various services using API keys for enhanced functionality."
+    },
+    "next": "Next",
+    "finish": "Get Started",
+    "skip": "Skip Tour"
+  },
+  "stemExtractor": {
+    "title": "AI Stem Separator",
+    "subtitle": "Professional Audio Track Separation",
+    "description": "Separate your music into individual instrument tracks using state-of-the-art AI technology",
+    "extract": "Extract Stems",
+    "dropzone": {
+      "title": "Upload Audio",
+      "placeholder": "Drop your audio file here or click to browse",
+      "dragActive": "Drop the file here...",
+      "browse": "Browse Files",
+      "or": "or",
+      "dragHere": "drag and drop your file here",
+      "maxSize": "Maximum file size: 500MB",
+      "supportedFormats": "Supported formats: MP3, WAV, FLAC, OGG, M4A"
+    },
+    "preview": {
+      "title": "Audio Preview",
+      "waveform": "Waveform Visualization",
+      "play": "Play",
+      "pause": "Pause",
+      "stop": "Stop",
+      "loading": "Loading audio...",
+      "noPreview": "Preview not available",
+      "duration": "Duration",
+      "currentTime": "Current Time",
+      "remainingTime": "Time Remaining"
+    },
+    "settings": {
+      "title": "Extraction Settings",
+      "subtitle": "Configure your separation preferences",
+      "model": "AI Model",
+      "stems": {
+        "label": "Track Separation",
+        "description": "Choose how to separate the tracks",
+        "options": {
+          "2stems": {
+            "label": "2 Stems",
+            "description": "Vocals + Instrumental"
+          },
+          "4stems": {
+            "label": "4 Stems",
+            "description": "Vocals + Drums + Bass + Other"
+          },
+          "5stems": {
+            "label": "5 Stems",
+            "description": "Vocals + Drums + Bass + Piano + Other"
+          }
+        }
+      },
+      "splits":"Splits",
+      "advanced": {
+        "label": "Advanced Settings",
+        "segments": "Segment Length",
+        "shifts": "Shifts",
+        "overlap": "Overlap",
+        "normalize": "Normalize Audio",
+        "denoise": "Reduce Noise",
+        "quality": {
+          "label": "Output Quality",
+          "options": {
+            "low": "Low (Fast)",
+            "medium": "Medium (Balanced)",
+            "high": "High (Slow)"
+          }
+        }
+      }
+    },
+
+    "processing": {
+      "title": "Processing Audio",
+      "status": "Processing: {progress}%",
+      "estimated": "Estimated time remaining: {time}",
+      "phases": {
+        "preparing": "Preparing audio...",
+        "analyzing": "Analyzing tracks...",
+        "separating": "Separating stems...",
+        "processing": "Processing stems...",
+        "finishing": "Finalizing...",
+        "exporting": "Exporting files..."
+      },
+      "cancel": "Cancel Processing",
+      "pause": "Pause Processing",
+      "resume": "Resume Processing"
+    },
+
+    "fileInfo": {
+      "title": "File Information",
+      "name": "File Name",
+      "size": "File Size",
+      "type": "File Type",
+      "duration": "Duration",
+      "format": "Format",
+      "bitrate": "Bitrate",
+      "sampleRate": "Sample Rate",
+      "channels": "Channels",
+      "created": "Created",
+      "modified": "Modified",
+      "location": "Location"
+    },
+
+    "features": {
+      "quality": {
+        "title": "High-Quality Separation",
+        "description": "State-of-the-art AI models for clean, artifact-free stem separation"
+      },
+      "ai": {
+        "title": "Advanced AI Processing",
+        "description": "Multiple AI models optimized for different types of music"
+      },
+      "format": {
+        "title": "Multiple Format Support",
+        "description": "Support for various audio formats and quality settings"
+      },
+      "batch": {
+        "title": "Batch Processing",
+        "description": "Process multiple files simultaneously"
+      },
+      "realtime": {
+        "title": "Real-time Preview",
+        "description": "Preview separated stems before processing"
+      },
+      "export": {
+        "title": "Flexible Export",
+        "description": "Export in multiple formats and quality settings"
+      }
+    },
+    "actions": {
+      "extract": "Start Extraction",
+      "cancel": "Cancel",
+      "clear": "Clear",
+      "save": "Save",
+      "download": "Download",
+      "preview": "Preview",
+      "settings": "Settings",
+      "back": "Back",
+      "next": "Next",
+      "finish": "Finish",
+      "retry": "Retry",
+      "reset": "Reset",
+      "browse": "Browse"
+    },
+    "results": {
+      "title": "Extracted Stems",
+      "vocals": "Vocals",
+      "drums": "Drums",
+      "bass": "Bass",
+      "piano": "Piano",
+      "other": "Other Instruments",
+      "instrumental": "Instrumental",
+      "accompaniment": "Accompaniment",
+      "download": {
+        "all": "Download All",
+        "individual": "Download Individual Stems",
+        "format": "Download Format",
+        "quality": "Download Quality"
+      }
+    },
+    "success": {
+      "title": "Extraction Complete",
+      "description": "Your stems have been successfully separated",
+      "downloadReady": "Your files are ready for download",
+      "processed": "Successfully processed {filename}",
+      "saved": "Settings saved successfully",
+      "exported": "Files exported successfully"
+    },
+    "error": {
+      "title": "Extraction Failed",
+      "description": "An error occurred during stem separation",
+      "types": {
+        "invalidFile": "Invalid File",
+        "audioOnly": "Please select an audio file",
+        "tooLarge": "File is too large",
+        "unsupported": "Unsupported audio format",
+        "processing": "Processing error",
+        "network": "Network error",
+        "server": "Server error",
+        "unknown": "Unknown error"
+      },
+      "messages": {
+        "fileSize": "File size exceeds maximum limit of {size}",
+        "format": "File format {format} is not supported",
+        "network": "Please check your internet connection",
+        "server": "Server is currently unavailable",
+        "generic": "Something went wrong. Please try again"
+      }
+    },
+    "help": {
+      "title": "Help & Tips",
+      "bestPractices": "Best Practices",
+      "tips": [
+        "Use high-quality source files for better results",
+        "Longer processing time usually yields better quality",
+        "4-stem separation works best for most music",
+        "Enable noise reduction for cleaner output"
+      ],
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "items": {
+          "quality": {
+            "q": "Which model gives the best quality?",
+            "a": "HTDemucs typically provides the best overall separation quality"
+          },
+          "time": {
+            "q": "How long does processing take?",
+            "a": "Processing time depends on file length and selected quality"
+          },
+          "format": {
+            "q": "What formats are supported?",
+            "a": "We support MP3, WAV, FLAC, OGG, and M4A formats"
+          }
+        }
+      }
+    }
+  }
+}

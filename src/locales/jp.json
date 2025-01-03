@@ -1,0 +1,216 @@
+{
+    "app": {
+      "name": "メディアダウンローダーユーティリティ",
+      "status": {
+        "ready": "準備完了"
+      }
+    },
+    "navigation": {
+      "downloader": "ダウンローダー",
+      "converter": "コンバーター",
+      "stemExtractor": "ステム抽出",
+      "remux": "リマックス",
+      "settings": "設定"
+    },
+    "downloads": {
+      "title": "ダウンロード",
+      "addModal": {
+        "title": "ダウンロードを追加",
+        "urlPlaceholder": "YouTubeのURLを入力",
+        "fetch": "情報を取得",
+        "selectFormat": "フォーマットを選択",
+        "download": "ダウンロード",
+        "videoInfo": "動画情報",
+        "quality": "品質",
+        "size": "サイズ",
+        "format": "フォーマット"
+      },
+      "actions": {
+        "addDownload": "ダウンロードを追加",
+        "stopAll": "すべて停止",
+        "clearHistory": "履歴をクリア",
+        "stop": "停止",
+        "remove": "削除",
+        "retry": "再試行",
+        "addFirst": "最初のダウンロードを追加"
+      },
+      "status": {
+        "loading": "読み込み中...",
+        "noDownloads": "ダウンロードはありません",
+        "completed": "完了",
+        "downloading": "ダウンロード中",
+        "stopped": "停止済み",
+        "failed": "失敗",
+        "waiting": "待機中"
+      },
+      "search": {
+        "placeholder": "ダウンロードを検索"
+      },
+      "errors": {
+        "emptyUrl": "URLを入力してください",
+        "invalidUrl": "無効なURL",
+        "fetchError": "動画情報の取得に失敗しました",
+        "downloadError": "ダウンロードに失敗しました",
+        "networkError": "ネットワークエラー",
+        "unsupportedFormat": "未対応のフォーマット"
+      },
+      "format": {
+        "quality": "品質",
+        "size": "サイズ",
+        "type": "タイプ",
+        "video": "動画",
+        "audio": "音声",
+        "unknown": "不明",
+        "bestQuality": "最高品質",
+        "highestRes": "最高解像度",
+        "lowestRes": "最低解像度",
+        "audioOnly": "音声のみ"
+      },
+      "info": {
+        "duration": "再生時間",
+        "uploader": "アップローダー",
+        "views": "再生回数",
+        "uploadDate": "アップロード日",
+        "resolution": "解像度",
+        "bitrate": "ビットレート",
+        "codec": "コーデック",
+        "container": "コンテナ"
+      },
+      "progress": {
+        "speed": "速度",
+        "eta": "残り時間",
+        "downloaded": "ダウンロード済み",
+        "total": "合計",
+        "percentage": "進捗"
+      }
+    },
+    "common": {
+      "cancel": "キャンセル",
+      "close": "閉じる",
+      "save": "保存",
+      "delete": "削除",
+      "edit": "編集",
+      "loading": "読み込み中...",
+      "error": "エラー",
+      "success": "成功",
+      "warning": "警告",
+      "info": "情報",
+      "confirm": "確認",
+      "apply": "適用",
+      "reset": "リセット",
+      "yes": "はい",
+      "no": "いいえ",
+      "ok": "OK",
+      "back": "戻る",
+      "next": "次へ",
+      "done": "完了",
+      "retry": "再試行",
+      "settings": "設定"
+    },
+    "settings": {
+      "title": "設定",
+      "sections": {
+        "general": "一般",
+        "media": "メディア",
+        "advanced": "詳細設定",
+        "about": "このアプリについて"
+      },
+      "tabs": {
+        "general": "一般",
+        "language": "言語",
+        "appearance": "外観",
+        "directories": "ディレクトリ",
+        "downloads": "ダウンロード",
+        "audio": "音声",
+        "video": "動画",
+        "network": "ネットワーク",
+        "privacy": "プライバシー",
+        "advanced": "詳細設定",
+        "about": "このアプリについて"
+      },
+      "general": {
+        "title": "一般設定",
+        "startup": {
+          "title": "起動",
+          "launchAtStartup": "システム起動時に起動",
+          "launchAtStartupDescription": "コンピューター起動時に自動的にアプリケーションを起動します",
+          "minimizeToTray": "トレイに最小化",
+          "minimizeToTrayDescription": "閉じた時にシステムトレイで実行を継続します"
+        },
+        "updates": {
+          "title": "アップデート",
+          "autoUpdate": "自動アップデート",
+          "autoUpdateDescription": "自動的にアップデートをダウンロードしてインストールします",
+          "checkForUpdates": "アップデートを確認",
+          "currentVersion": "現在のバージョン"
+        },
+        "performance": {
+          "title": "パフォーマンス",
+          "hardwareAcceleration": "ハードウェアアクセラレーション",
+          "hardwareAccelerationDescription": "より良いパフォーマンスのためにGPUアクセラレーションを使用します",
+          "processPriority": "プロセス優先度",
+          "processPriorityDescription": "アプリケーションのプロセス優先度を設定"
+        }
+      }
+    },
+    "menu": {
+      "file": {
+        "title": "ファイル",
+        "newProject": "新規プロジェクト",
+        "openProject": "プロジェクトを開く",
+        "openRecent": "最近使用したファイル",
+        "save": "保存",
+        "saveAs": "名前を付けて保存...",
+        "export": "エクスポート",
+        "projectSettings": "プロジェクト設定",
+        "exit": "終了"
+      },
+      "edit": {
+        "title": "編集",
+        "undo": "元に戻す",
+        "redo": "やり直し",
+        "cut": "切り取り",
+        "copy": "コピー",
+        "paste": "貼り付け",
+        "delete": "削除",
+        "selectAll": "すべて選択",
+        "deselect": "選択解除",
+        "preferences": "環境設定"
+      },
+      "view": {
+        "title": "表示",
+        "zoomIn": "拡大",
+        "zoomOut": "縮小",
+        "resetZoom": "ズームをリセット",
+        "toggleFullscreen": "全画面表示切替",
+        "showSidebar": "サイドバーを表示",
+        "showConsole": "コンソールを表示",
+        "showStatusBar": "ステータスバーを表示",
+        "theme": {
+          "title": "テーマ",
+          "light": "ライト",
+          "dark": "ダーク",
+          "system": "システム設定"
+        }
+      },
+      "tools": {
+        "title": "ツール",
+        "downloadManager": "ダウンロード管理",
+        "batchConverter": "一括変換",
+        "audioExtractor": "音声抽出",
+        "videoRemuxer": "動画リマックス",
+        "formatSettings": "フォーマット設定",
+        "qualityPresets": "品質プリセット",
+        "developerTools": "開発者ツール"
+      },
+      "more": {
+        "title": "その他",
+        "checkUpdates": "更新の確認",
+        "documentation": "ドキュメント",
+        "keyboardShortcuts": "キーボードショートカット",
+        "reportIssue": "問題を報告",
+        "supportForum": "サポートフォーラム",
+        "about": "バージョン情報"
+      }
+    }
+  }
