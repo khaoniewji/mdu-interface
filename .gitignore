@@ -6,3 +6,4 @@ yarn-debug.log
 yarn.lock
 package-lock.json
 bun.lockb
+dist-electron

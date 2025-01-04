@@ -1,5 +1,5 @@
 // src/lib/webview.ts
-import { webviewBridge } from './webview-bridge';
+import { electronBridge } from './electron-bridge';
 import type { 
     FileDialogOptions, 
     FileDialogResult, 
@@ -14,14 +14,14 @@ export * from './types';
 export const openFileDialog = async (
     options: FileDialogOptions
 ): Promise<FileDialogResult> => {
-    return webviewBridge.openFileDialog(options);
+    return electronBridge.openFileDialog(options);
 };
 
 export const getDocumentDir = async (options?: {
     create?: boolean;
     defaultPath?: string;
 }): Promise<string> => {
-    return webviewBridge.getDocumentDir(options);
+    return electronBridge.getDocumentDir(options);
 };
 
 export const invokeCommand = async <T>(
@@ -29,21 +29,10 @@ export const invokeCommand = async <T>(
     args?: any,
     options?: ExecuteCommandOptions
 ): Promise<T> => {
-    return webviewBridge.invokeCommand<T>(command, args, options);
+    return electronBridge.invokeCommand<T>(command, args, options);
 };
 
 export const getMediaInfo = async (filePath: string): Promise<MediaInfo> => {
-    return webviewBridge.getMediaInfo(filePath);
+    return electronBridge.getMediaInfo(filePath);
 };
 
-// WebView2 type definitions
-declare global {
-    interface Window {
-        chrome?: {
-            webview?: {
-                postMessage: (message: any) => void;
-                addEventListener: (type: string, listener: (event: any) => void) => void;
-            };
-        };
-    }
-}

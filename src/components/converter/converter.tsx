@@ -43,7 +43,7 @@ import {
 import ConverterList from "./converterlists";
 import AddConversion from "./addconversion";
 import { ConversionItem, ConversionOptions } from "./types";
-import { invokeCommand } from "@/lib/webview";
+import { invokeCommand } from "../../lib/webview";
 
 function Converter() {
   const [conversionData, setConversionData] = useState<ConversionItem[]>([]);

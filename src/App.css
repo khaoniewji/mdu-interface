@@ -43,12 +43,6 @@ html, body {
   border-radius: 0;
 }
 
-.fullscreen {
-  .titlebar {
-      display: none;
-  }
-}
-
 /* Ensure proper scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
@@ -133,14 +127,6 @@ html, body {
   }
 }
 
-/* In your global CSS */
-.titlebar-drag-region {
-  -webkit-app-region: drag;
-}
-
-.titlebar-no-drag {
-  -webkit-app-region: no-drag;
-}
 .gradient-border-container {
   position: relative;
   padding: 1px;
@@ -207,4 +193,12 @@ html, body {
 
 .gradient-hover:hover::before {
   @apply opacity-100;
+}
+
+.titlebar-drag-region {
+  -webkit-app-region: drag;
+}
+
+.titlebar-no-drag {
+  -webkit-app-region: no-drag;
 }

@@ -49,7 +49,7 @@ export function SettingsPanel({
             onValueChange={(value) => onSettingChange("model", value)}
             disabled={isProcessing}
           >
-            <SelectTrigger className="w-full bg-background">
+            <SelectTrigger className="w-full bg-background text-left">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
