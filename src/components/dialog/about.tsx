@@ -50,7 +50,7 @@ export function AboutDialog({ isOpen, onClose }: AboutDialogProps) {
           <div className="space-y-4">
             <div>
               <h4 className="text-sm font-semibold mb-2">
-                {t('about.features')}
+                {t('about.features.title')}
               </h4>
               <ul className="text-sm text-muted-foreground space-y-1">
                 <li>• {t('about.features.multiPlatform')}</li>
@@ -58,6 +58,9 @@ export function AboutDialog({ isOpen, onClose }: AboutDialogProps) {
                 <li>• {t('about.features.download')}</li>
                 <li>• {t('about.features.browser')}</li>
                 <li>• {t('about.features.proxy')}</li>
+                <li>• {t('about.features.batch')}</li>
+                <li>• {t('about.features.extract')}</li>
+                <li>• {t('about.features.convert')}</li>
               </ul>
             </div>
 

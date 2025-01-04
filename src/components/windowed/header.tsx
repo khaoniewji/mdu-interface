@@ -117,52 +117,6 @@ declare global {
     }
 }
 
-const WindowControls = () => {
-    const handleMinimize = () => {
-        window.electron.minimize();
-    };
-
-    const handleMaximize = () => {
-        window.electron.maximize();
-    };
-
-    const handleClose = () => {
-        window.electron.close();
-    };
-
-    return (
-        <div className="flex items-center space-x-2">
-            <button
-                className="hover:bg-gray-200 dark:hover:bg-gray-800 p-1.5 rounded-md"
-                onClick={handleMinimize}
-            >
-                <svg width="12" height="12" viewBox="0 0 12 12">
-                    <rect width="10" height="1" x="1" y="5.5" fill="currentColor" />
-                </svg>
-            </button>
-            <button
-                className="hover:bg-gray-200 dark:hover:bg-gray-800 p-1.5 rounded-md"
-                onClick={handleMaximize}
-            >
-                <svg width="12" height="12" viewBox="0 0 12 12">
-                    <rect width="9" height="9" x="1.5" y="1.5" fill="none" stroke="currentColor" />
-                </svg>
-            </button>
-            <button
-                className="hover:bg-red-500 group p-1.5 rounded-md"
-                onClick={handleClose}
-            >
-                <svg width="12" height="12" viewBox="0 0 12 12">
-                    <path
-                        d="M2.4 1.399a.708.708 0 00-1 1L4.6 5.599l-3.2 3.2a.708.708 0 001 1l3.2-3.2 3.2 3.2a.708.708 0 001-1L6.6 5.599l3.2-3.2a.708.708 0 00-1-1l-3.2 3.2z"
-                        fill="currentColor"
-                        className="group-hover:fill-white"
-                    />
-                </svg>
-            </button>
-        </div>
-    );
-};
 
 function Header() {
     const navigate = useNavigate();
@@ -233,7 +187,7 @@ function Header() {
 
                 {/* Right: Window Controls */}
                 <div className="flex-none pr-3 pl-2 titlebar-no-drag">
-                    <WindowControls />
+                 
                 </div>
             </div>
 

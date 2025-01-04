@@ -21,7 +21,13 @@ const createWindow = (): void => {
             sandbox: false,
             preload: path.join(__dirname, 'preload.js')
         },
-        backgroundColor: '#ffffff',
+        titleBarStyle: 'hidden',
+        titleBarOverlay: {
+          color: '#00000000',
+          symbolColor: '#ffffff',
+          height: 48
+        },
+        backgroundColor: '#0C0C0E',
     });
 
     // Load the app

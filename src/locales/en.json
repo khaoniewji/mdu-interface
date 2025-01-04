@@ -385,6 +385,7 @@
         "nightly": "Nightly"
       }
     },
+    "description":"Media Downloader Utility is a free and open-source media utility application that allows you to download, convert, and extract media files from various sources. It is designed to be simple, fast, and efficient, with a focus on user privacy and data security.",
     "update": {
       "title": "Updates",
       "check": "Check for Updates",
@@ -440,6 +441,17 @@
       "and": "and",
       "community": "the open source community",
       "copyright": "© {{year}} All rights reserved"
+    },
+    "features":{
+      "title":"Key Features",
+      "multiPlatform":"Multi-platform support",
+      "formats":"Supports various media formats",
+      "download":"Download media from popular websites",
+      "browser":"Built-in browser for easy navigation",
+      "proxy":"Proxy support for region-restricted content",
+      "batch":"Batch download and conversion",
+      "extract":"Extract audio from video files",
+      "convert":"Convert media to different formats"
     }
   },
   "converter": {
