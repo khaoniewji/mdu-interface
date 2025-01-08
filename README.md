@@ -2,7 +2,7 @@
 [![Status](https://img.shields.io/badge/Status-Work%20In%20Progress-yellow)](https://github.com/khaoniewji/mdu)
 [![Discord](https://img.shields.io/badge/Discord-Join%20Us-blue)](https://discord.gg/your-invite-here)
 
-# Welcome to MDU Interface Frontend! 👋
+# Welcome to Media Downloader Utility! 👋
 
 Transform your audio processing workflow with our modern, lightning-fast web interface for music stem separation. Built with ❤️ using Bun, React, and TypeScript.
 
