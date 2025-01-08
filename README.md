@@ -89,14 +89,6 @@ Hi! I'm Himesora Aika, and I wear all the hats here:
 
 Join our friendly Discord community! We're here to help you succeed with MDU.
 
-## 💝 Special Thanks
-
-Huge thanks to these amazing projects that make MDU possible:
-- The innovative Bun team
-- The talented shadcn/ui creators
-- The amazing TailwindCSS community
-- The incredible React team
-
 ## 📄 License
 
 MDU is open source under the MIT License. See the [LICENSE](LICENSE) file for details.
