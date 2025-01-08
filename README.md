@@ -1,6 +1,6 @@
 [![Powered by Bun](https://img.shields.io/badge/Powered%20by-Bun-orange)](https://bun.sh)
 [![Status](https://img.shields.io/badge/Status-Work%20In%20Progress-yellow)](https://github.com/khaoniewji/mdu)
-[![Discord](https://img.shields.io/badge/Discord-Join%20Us-blue)](https://discord.gg/your-invite-here)
+[![Discord](https://img.shields.io/badge/Discord-Join%20Us-blue)](https://discord.gg/cUbwGTCuQu)
 
 # Welcome to Media Downloader Utility! 👋
 
