@@ -28,71 +28,13 @@ A modern, high-performance web interface for music stem separation and audio pro
 - **Routing:** React Router
 - **Internationalization:** i18next
 - **Motion:** Framer Motion
+- **Desktop App** electron
 
 ## 📋 Requirements
 
 - [Bun](https://bun.sh) >= 1.0.0
 - Node.js >= 18.0.0 (for some dependencies)
 
-## 📦 Installation
-
-1. Install Bun (if not already installed):
-```bash
-curl -fsSL https://bun.sh/install | bash
-```
-
-2. Clone the repository:
-```bash
-git clone https://github.com/yourusername/mdu-interface.git
-cd mdu-interface
-```
-
-3. Install dependencies:
-```bash
-bun install
-```
-
-4. Start the development server:
-```bash
-bun dev
-```
-
-## 🏃‍♂️ Scripts
-
-```json
-{
-  "scripts": {
-    "dev": "bun run --hot src/index.tsx",
-    "build": "bun build ./src/index.tsx --outdir ./dist",
-    "start": "bun run dist/index.js",
-    "test": "bun test",
-    "lint": "bun eslint",
-    "format": "bun prettier",
-    "type-check": "bun tsc --noEmit"
-  }
-}
-```
-
-## 🏗️ Project Structure
-
-```
-mdu-interface/
-├── public/
-│   └── locales/           # Translation files
-├── src/
-│   ├── components/        # React components
-│   │   ├── ui/           # Base UI components
-│   │   ├── converter/    # Audio conversion components
-│   │   ├── settings/     # Settings components
-│   │   └── stemextractor/# Stem extraction components
-│   ├── lib/              # Utility libraries
-│   ├── styles/           # Global styles
-│   ├── types/            # TypeScript definitions
-│   └── utils/            # Utility functions
-├── tests/                # Test files
-├── bunfig.toml           # Bun configuration
-└── tsconfig.json         # TypeScript configuration
-```
 ## 🚀 Development
 
 ### 1. Setup project!: clone repository
