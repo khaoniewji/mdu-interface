@@ -28,8 +28,6 @@ A modern, high-performance web interface for music stem separation and audio pro
 - **Routing:** React Router
 - **Internationalization:** i18next
 - **Motion:** Framer Motion
-- **Audio Processing:** Web Audio API
-- **Backend Integration:** FastAPI (Python)
 
 ## 📋 Requirements
 
@@ -95,138 +93,28 @@ mdu-interface/
 ├── bunfig.toml           # Bun configuration
 └── tsconfig.json         # TypeScript configuration
 ```
-
-## ⚙️ Configuration
-
-### Bun Configuration
-
-```toml
-# bunfig.toml
-[bundle]
-entry = "./src/index.tsx"
-outdir = "./dist"
-minify = true
-sourcemap = true
-
-[dev]
-port = 3000
-hot = true
-
-[test]
-coverage = true
-```
-
-### Environment Variables
-
-Create a `.env` file:
-
-```env
-VITE_API_URL=http://localhost:8000
-VITE_APP_NAME=MDU Interface
-VITE_DEBUG=true
-```
-
-Load environment variables in Bun:
-```typescript
-const env = Bun.env;
-```
-
-## 🧪 Testing
-
-Bun comes with a built-in test runner:
-
-```bash
-# Run tests
-bun test
-
-# Run tests with coverage
-bun test --coverage
-
-# Watch mode
-bun test --watch
-```
-
-Example test:
-```typescript
-import { expect, test } from "bun:test";
-
-test("component renders correctly", () => {
-  // Test logic
-});
-```
-
 ## 🚀 Development
 
-### Hot Module Replacement
-
-Bun supports HMR out of the box:
+### 1. Setup project!: clone repository
 
 ```bash
-bun --hot src/index.tsx
+git clone https://github.com/khaoniewji/mdu
 ```
+### 2. install depedencies with bun
 
-### TypeScript
-
-Bun includes TypeScript support by default:
-
-```typescript
-import { type BunFile } from "bun";
+```bash
+bun install
 ```
+### 3. start development
 
-### Using Bun.serve
-
-```typescript
-const server = Bun.serve({
-  port: 3000,
-  fetch(req) {
-    return new Response("Welcome to MDU Interface!");
-  },
-});
-
-console.log(`Listening on http://localhost:${server.port}`);
+```bash
+bun run electron:dev
 ```
-
 ## 📦 Building for Production
 
 ```bash
 # Build the application
-bun build ./src/index.tsx --outdir ./dist
-
-# Run the production build
-bun run dist/index.js
-```
-
-## 🔧 Performance Optimization
-
-Bun provides several performance advantages:
-
-- Native TypeScript/JSX support
-- Built-in bundler
-- Fast dependency installation
-- Efficient hot reloading
-- Quick test execution
-
-## 🔌 API Integration
-
-Using Bun's fetch:
-
-```typescript
-const response = await fetch(`${env.VITE_API_URL}/extraction/start`, {
-  method: 'POST',
-  body: formData,
-});
-```
-
-## 🚀 Deployment
-
-1. Build the project:
-```bash
-bun build
-```
-
-2. Run in production:
-```bash
-NODE_ENV=production bun start
+bun run electron:build
 ```
 
 ## 📚 Additional Resources
@@ -243,29 +131,16 @@ NODE_ENV=production bun start
 4. Push to the branch
 5. Create a Pull Request
 
-## 🐛 Debugging
-
-Bun provides built-in debugging capabilities:
-
-```bash
-bun --inspect src/index.tsx
-```
-
-## 📈 Performance Monitoring
-
-```bash
-bun run --profile
-```
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👥 Team
 
-- Lead Developer: [Name]
-- UI/UX Designer: [Name]
-- Project Manager: [Name]
+- Lead Developer: Himesora Aika
+- UI/UX Designer: Himesora Aika
+- Project Manager: Himesora Aika
+.... Yes, I do it alone. ....
 
 ## 📞 Support
 
