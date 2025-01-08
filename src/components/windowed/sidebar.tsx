@@ -1,4 +1,3 @@
-// src/components/windowed/sidebar.tsx
 import { useState, useEffect } from 'react';
 import {
     Download,
@@ -39,13 +38,10 @@ interface SystemStats {
 
 function formatBytes(bytes: number, decimals = 1): string {
     if (bytes === 0) return '0 Bytes';
-
     const k = 1024;
     const dm = decimals < 0 ? 0 : decimals;
-    const sizes = ['Bytes', 'KB', 'MB', 'TB'];
-
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
-
     return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 }
 
@@ -56,7 +52,8 @@ function calculateUsagePercentage(total: number, available: number): number {
 function Sidebar() {
     const { t } = useTranslation();
     const [drives, setDrives] = useState<DriveInfo[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isInitialLoad, setIsInitialLoad] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [networkSpeed, setNetworkSpeed] = useState<NetworkSpeed>({
         download: 0,
@@ -66,28 +63,49 @@ function Sidebar() {
     const [counts, setCounts] = useState({ downloads: 0, queue: 0, completed: 0 });
 
     useEffect(() => {
-        loadSystemStats();
-        const unsubscribePromise = setupSystemStatsListener();
-        const intervalId = setInterval(loadSystemStats, 5000); // Refresh every 5 seconds
+        const initializeStats = async () => {
+            try {
+                const initialStats = await invokeCommand<SystemStats>('get_system_stats');
+                updateStats(initialStats);
+                setIsInitialLoad(false);
+            } catch (error) {
+                console.error('Failed to load initial stats:', error);
+                setError(t('sidebar.drives.error.loading'));
+                setIsInitialLoad(false);
+            }
+        };
+
+        initializeStats();
+        setupSystemStatsListener();
 
         return () => {
-            clearInterval(intervalId);
-            unsubscribePromise.then(unsubscribe => {
-                if (unsubscribe) unsubscribe();
-            });
+            cleanup();
         };
     }, []);
+
+    const updateStats = (stats: SystemStats) => {
+        if (stats.drives.length > 0) {
+            setDrives(prevDrives => {
+                // Only update if we have new valid data
+                return stats.drives.length > 0 ? stats.drives : prevDrives;
+            });
+        }
+        setNetworkSpeed(stats.network);
+        setCounts(stats.counts);
+        setError(null);
+    };
 
     const setupSystemStatsListener = async () => {
         try {
             return await invokeCommand<() => void>('subscribe_to_system_stats', {
                 onUpdate: (stats: SystemStats) => {
-                    setDrives(stats.drives);
-                    setNetworkSpeed(stats.network);
-                    setCounts(stats.counts);
+                    updateStats(stats);
                 },
                 onError: (errorMessage: string) => {
-                    setError(errorMessage);
+                    // Only show error if we have no drives data
+                    if (drives.length === 0) {
+                        setError(errorMessage);
+                    }
                 }
             });
         } catch (error) {
@@ -95,19 +113,25 @@ function Sidebar() {
         }
     };
 
-    const loadSystemStats = async () => {
+    const cleanup = () => {
+        invokeCommand('unsubscribe_from_system_stats').catch(console.error);
+    };
+
+    const handleRefresh = async () => {
+        if (isRefreshing) return;
+
+        setIsRefreshing(true);
         try {
-            setError(null);
-            setIsLoading(true);
             const stats = await invokeCommand<SystemStats>('get_system_stats');
-            setDrives(stats.drives);
-            setNetworkSpeed(stats.network);
-            setCounts(stats.counts);
+            updateStats(stats);
         } catch (error) {
-            console.error('Failed to load system stats:', error);
-            setError(t('sidebar.drives.error.loading'));
+            console.error('Failed to refresh stats:', error);
+            // Only show error if we have no drives data
+            if (drives.length === 0) {
+                setError(t('sidebar.drives.error.loading'));
+            }
         } finally {
-            setIsLoading(false);
+            setIsRefreshing(false);
         }
     };
 
@@ -115,7 +139,7 @@ function Sidebar() {
         <div className="w-64 h-full bg-white border-r border-gray-200 flex flex-col dark:bg-zinc-950 dark:border-zinc-800">
             <div className="flex-1 space-y-6 p-4">
                 {/* Categories Section */}
-                <div className="space-y-1">
+                <div className="space-y-0">
                     <div className="px-2 py-1.5">
                         <h2 className="text-xs font-medium text-gray-500 dark:text-gray-400">
                             {t('sidebar.categories.title')}
@@ -129,7 +153,7 @@ function Sidebar() {
                         ].map(({ icon: Icon, label, count }) => (
                             <button
                                 key={label}
-                                className="w-full flex items-center px-2 py-1.5 text-sm text-gray-600 hover:bg-gray-50 rounded-md group transition-colors dark:text-gray-300 dark:hover:bg-zinc-900"
+                                className="w-full flex items-center px-2 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded-md group transition-colors dark:text-gray-300 dark:hover:bg-zinc-900"
                             >
                                 <div className="flex items-center">
                                     <Icon className="w-4 h-4 mr-3 text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-200" />
@@ -147,20 +171,20 @@ function Sidebar() {
 
                 {/* Drive Status Section */}
                 <div className="space-y-1">
-                    <div className="px-2 py-1.5 flex items-center justify-between">
+                    <div className="px-2 flex items-center justify-between">
                         <h2 className="text-xs font-medium text-gray-500 dark:text-gray-400">
                             {t('sidebar.drives.title')}
                         </h2>
                         <button
-                            onClick={loadSystemStats}
+                            onClick={handleRefresh}
                             className="p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-colors dark:hover:bg-zinc-900 dark:hover:text-gray-200"
-                            disabled={isLoading}
+                            disabled={isRefreshing}
                         >
-                            <RefreshCw className={`w-3.5 h-3.5 ${isLoading ? 'animate-spin' : ''}`} />
+                            <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
                         </button>
                     </div>
 
-                    {error && (
+                    {error && drives.length === 0 && (
                         <div className="mx-2 p-2 bg-red-50 border border-red-100 rounded-md dark:bg-red-900/10 dark:border-red-900/20">
                             <p className="text-xs text-red-600 flex items-center dark:text-red-400">
                                 <AlertCircle className="w-3.5 h-3.5 mr-2" />
@@ -169,14 +193,14 @@ function Sidebar() {
                         </div>
                     )}
 
-                    <div className="space-y-3 px-2">
-                        {isLoading ? (
-                            <div className="text-sm text-gray-400">
+                    <div className="space-y-1 px-2">
+                        {isInitialLoad ? (
+                            <div className="text-sm text-gray-400 animate-pulse">
                                 {t('sidebar.drives.loading')}
                             </div>
                         ) : (
                             drives.map((drive, index) => (
-                                <div key={index} className="space-y-1.5">
+                                <div key={`${drive.name}-${index}`} className="space-y-1.5">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center space-x-2">
                                             <HardDrive className="w-3.5 h-3.5 text-gray-400" />
@@ -206,20 +230,20 @@ function Sidebar() {
                     </div>
                 </div>
 
-                {/* Network Status Section */}
-                <div className="space-y-1">
+                {/* Network Status Section remains unchanged */}
+                <div className="space-y-0">
                     <div className="px-2 py-1.5">
                         <h2 className="text-xs font-medium text-gray-500 dark:text-gray-400">
                             {t('sidebar.network.title')}
                         </h2>
                     </div>
-                    <div className="px-3 py-2 bg-gray-50 rounded-md mx-2 dark:bg-zinc-900">
-                        <div className="flex items-center space-x-2 mb-2">
+                    <div className=" px-2">
+                        {/* <div className="flex items-center space-x-2 ">
                             <Network className="w-3.5 h-3.5 text-gray-400" />
                             <span className="text-sm text-gray-600 dark:text-gray-300">
                                 {t('sidebar.network.speed')}
                             </span>
-                        </div>
+                        </div> */}
                         <div className="grid grid-cols-2 gap-2 text-sm">
                             <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
                                 <span>↓</span>

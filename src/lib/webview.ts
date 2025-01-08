@@ -4,7 +4,8 @@ import type {
     FileDialogOptions, 
     FileDialogResult, 
     ExecuteCommandOptions, 
-    MediaInfo 
+    MediaInfo,
+    SystemStats
 } from './types';
 
 // Export type definitions
@@ -36,3 +37,15 @@ export const getMediaInfo = async (filePath: string): Promise<MediaInfo> => {
     return electronBridge.getMediaInfo(filePath);
 };
 
+// Add to electron-bridge.ts or webview.ts
+export const subscribeToSystemStats = async (interval?: number): Promise<number> => {
+    return invokeCommand<number>('subscribe_to_system_stats', { interval });
+};
+
+export const unsubscribeFromSystemStats = async (id: number): Promise<boolean> => {
+    return invokeCommand<boolean>('unsubscribe_from_system_stats', { id });
+};
+
+export const getSystemStats = async (): Promise<SystemStats> => {
+    return invokeCommand<SystemStats>('get_system_stats');
+};

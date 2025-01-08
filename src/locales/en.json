@@ -343,6 +343,8 @@
     }
   },
   "sidebar": {
+    "storage": "Storage",
+    "queue": "Queue",
     "categories": {
       "title": "Categories",
       "downloads": "Downloads",
@@ -365,6 +367,9 @@
       "download": "Download",
       "upload": "Upload",
       "total": "Total"
+    },
+    "app": {
+      "version": "Version"
     }
   },
   "about": {
@@ -995,5 +1000,12 @@
         }
       }
     }
+  },
+  "nav": {
+    "navigation": "Navigation",
+    "home": "Home",
+    "files": "Files",
+    "stats": "Statistics",
+    "settings": "Settings"
   }
 }

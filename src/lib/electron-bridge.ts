@@ -83,4 +83,6 @@ class ElectronBridge {
     }
 }
 
+
 export const electronBridge = ElectronBridge.getInstance();
+
