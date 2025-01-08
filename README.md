@@ -82,11 +82,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Lead Developer: Himesora Aika
 - UI/UX Designer: Himesora Aika
 - Project Manager: Himesora Aika
+
 .... Yes, I do it alone. ....
 
 ## 📞 Support
 
-For support, email support@example.com or join our Discord channel.
+For support, join our Discord channel.
 
 ## 🙏 Acknowledgments
 
