@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Video, Music, Download, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { invokeCommand } from '../../lib/webview';
+// import { invokeCommand } from '../../lib/webview';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+// import { extractVideo, getBestVideoFormat, getBestAudioFormat } from '@/lib/mducore/extractvideo';
 
 interface Format {
   format_id: string;
@@ -89,7 +90,14 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
     setVideoInfo(null);
   };
 
-  const fetchVideoInfo = async () => {
+  const fetchVideoInfo = async (
+    url: string,
+    setError: (error: string | null) => void,
+    setIsLoading: (isLoading: boolean) => void,
+    setVideoInfo: (info: VideoInfo | null) => void,
+    setSelectedFormat: (formatId: string) => void,
+    t: (key: string) => string
+  ) => {
     if (!url.trim()) {
       setError(t("downloads.errors.emptyUrl"));
       return;
@@ -100,16 +108,53 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
     setVideoInfo(null);
 
     try {
-      const info = await invokeCommand<VideoInfo>("extract_video_info", {
-        url: url.trim(),
-      });
+      const extractedInfo = await extractVideo(url.trim());
 
-      if (!info || !info.formats || info.formats.length === 0) {
+      if (!extractedInfo || !extractedInfo.formats || extractedInfo.formats.length === 0) {
         throw new Error(t("downloads.errors.noFormatsFound"));
       }
 
-      setVideoInfo(info);
-      setSelectedFormat(info.formats[0].format_id);
+      // Process and reorganize formats
+      const processedFormats = extractedInfo.formats.map(format => ({
+        ...format,
+        // Ensure quality is properly formatted
+        quality: format.format_note || format.quality || 'unknown',
+        // Add additional format information if available
+        format_note: [
+          format.fps ? `${format.fps}fps` : null,
+          format.bitrate ? `${Math.round(format.bitrate / 1000)}kbps` : null,
+          format.filesize ? formatFileSize(format.filesize) : null
+        ].filter(Boolean).join(', ') || undefined
+      }));
+
+      // Sort formats by quality (video resolution or audio bitrate)
+      const sortedFormats = processedFormats.sort((a, b) => {
+        const aHeight = parseInt(a.quality.match(/\d+/)?.[0] || '0');
+        const bHeight = parseInt(b.quality.match(/\d+/)?.[0] || '0');
+        if (aHeight && bHeight) return bHeight - aHeight;
+        return b.bitrate || 0 - (a.bitrate || 0);
+      });
+
+      const videoInfo: VideoInfo = {
+        id: extractedInfo.id,
+        title: extractedInfo.title,
+        formats: sortedFormats,
+        thumbnail: extractedInfo.thumbnail,
+        duration: extractedInfo.duration,
+        uploader: extractedInfo.uploader
+      };
+
+      setVideoInfo(videoInfo);
+
+      // Select the best available format by default
+      const bestFormat = sortedFormats.find(f =>
+        f.vcodec !== 'none' && f.acodec !== 'none'
+      ) || sortedFormats[0];
+
+      if (bestFormat) {
+        setSelectedFormat(bestFormat.format_id);
+      }
+
     } catch (err) {
       console.error("Video info extraction error:", err);
       setError(err instanceof Error ? err.message : String(err));
@@ -190,7 +235,7 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
               <Label>{setting.label}</Label>
               <Select
                 value={setting.value}
-                onValueChange={(value) => 
+                onValueChange={(value) =>
                   handleOptionChange(setting.key, value)
                 }
               >
@@ -227,7 +272,7 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
               placeholder={t("downloads.addModal.urlPlaceholder")}
               className="flex-1"
             />
-            <Button onClick={fetchVideoInfo} disabled={isLoading || !url.trim()}>
+            <Button onClick={() => fetchVideoInfo(url, setError, setIsLoading, setVideoInfo, setSelectedFormat, t)} disabled={isLoading || !url.trim()}>
               {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               {isLoading ? t("common.loading") : t("downloads.addModal.fetch")}
             </Button>
@@ -284,8 +329,8 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
                         key={format.format_id}
                         className={cn(
                           "p-3 rounded-lg transition-colors",
-                          selectedFormat === format.format_id 
-                            ? "bg-secondary" 
+                          selectedFormat === format.format_id
+                            ? "bg-secondary"
                             : "hover:bg-secondary/50"
                         )}
                       >

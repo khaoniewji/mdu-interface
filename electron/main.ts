@@ -5,6 +5,7 @@ import * as si from 'systeminformation';
 import checkDiskSpace from 'check-disk-space';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+import { createNativeMenu } from './menu';
 const execAsync = promisify(exec);
 
 // Development mode check
@@ -61,7 +62,6 @@ let subscriberId = 0;
 
 // Cache management
 let cachedStats: SystemStats | null = null;
-const CACHE_DURATION = 2000; // 2 seconds
 let consecutiveErrors = 0;
 const MAX_CONSECUTIVE_ERRORS = 3;
 const ERROR_COOLDOWN = 5000; // 5 seconds
@@ -337,7 +337,13 @@ const createWindow = (): void => {
 };
 
 // App lifecycle handlers
-app.whenReady().then(createWindow);
+app.whenReady().then(() => {
+    // Create native menu before creating the window
+    if (process.platform === 'darwin') {
+      createNativeMenu();
+    }
+    createWindow();
+  });
 
 app.on('window-all-closed', () => {
     subscribers.forEach((timer) => clearInterval(timer));

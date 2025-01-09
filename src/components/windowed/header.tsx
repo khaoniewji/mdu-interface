@@ -7,6 +7,7 @@ import {
     FileOutput,
     Music2,
     Settings as SettingsIcon,
+    Heart,
 } from 'lucide-react';
 import {
     NavigationMenu,
@@ -31,10 +32,16 @@ import { createMenuItems, MenuItem, MenuGroup } from '../../constants/menuitems'
 
 function MenuBar() {
     const { t } = useTranslation();
+    const navigate = useNavigate();
     const menuItems = createMenuItems(t);
     const [showAbout, setShowAbout] = useState(false);
 
     const handleMenuAction = (item: MenuItem) => {
+        if (item.action && typeof item.action === 'string' && "") {
+            navigate(item.action);
+            return;
+        }
+
         if (item.label === t('menu.more.about')) {
             setShowAbout(true);
         }
@@ -117,7 +124,6 @@ declare global {
     }
 }
 
-
 function Header() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -142,6 +148,12 @@ function Header() {
         }
     ];
 
+    // const handleWindowControl = (action: 'minimize' | 'maximize' | 'close') => {
+    //     if (window.electron) {
+    //         window.electron[action]?.();
+    //     }
+    // };
+
     return (
         <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="flex h-12 items-center z-[9999] titlebar-drag-region">
@@ -149,6 +161,7 @@ function Header() {
                 <div className="flex-none pl-3 pr-2 titlebar-no-drag">
                     <MenuBar />
                 </div>
+
                 {/* Center: Navigation area */}
                 <div className="flex-1 flex justify-center">
                     <div className="flex items-center space-x-1 titlebar-no-drag">
@@ -185,9 +198,23 @@ function Header() {
                     </div>
                 </div>
 
-                {/* Right: Window Controls */}
-                <div className="flex-none pr-3 pl-2 titlebar-no-drag">
-                 
+                {/* Right: Donate Button and Window Controls */}
+                <div className="flex-none pl-2 pr-[140px] titlebar-no-drag flex items-center gap-2">
+                    {/* Donate Button */}
+                    <Button
+                        variant="ghost"
+                        size="sm"
+                        className={`h-7 px-3 text-sm font-medium transition-colors hover:bg-pink-500/10
+                            ${location.pathname === '/donate' 
+                                ? 'text-pink-500 bg-pink-500/10' 
+                                : 'text-pink-400 hover:text-pink-500'}`}
+                        onClick={() => navigate('/donate')}
+                    >
+                        <Heart className={`h-4 w-4 mr-2 ${
+                            location.pathname === '/donate' ? 'fill-pink-500' : ''
+                        }`} />
+                        {t('navigation.donate')}
+                    </Button>
                 </div>
             </div>
 
@@ -198,6 +225,5 @@ function Header() {
         </div>
     );
 }
-
 
 export default Header;

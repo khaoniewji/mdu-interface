@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "target": "ESNext",
+      "module": "CommonJS",
+      "outDir": "dist/api",
+      "rootDir": "./api",
+      "strict": true,
+      "esModuleInterop": true,
+      "composite": true,
+    },
+    "include": ["api/**/*.ts"],
+    "exclude": ["node_modules", "**/*.test.ts"]
+  }
+  

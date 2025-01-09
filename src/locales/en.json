@@ -10,7 +10,8 @@
     "converter": "Converter",
     "stemExtractor": "Stem Extractor",
     "remux": "Remux",
-    "settings": "Settings"
+    "settings": "Settings",
+    "donate": "Donate"
   },
   "downloads": {
     "title": "Downloads",

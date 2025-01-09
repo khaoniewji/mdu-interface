@@ -13,6 +13,10 @@ export interface VideoInfo {
   }
   
   export interface Format {
+    bitrate: number;
+    fps: any;
+    height: number;
+    width?: number;
     format_id: string;
     url: string;
     ext: string;

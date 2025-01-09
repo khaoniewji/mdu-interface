@@ -1,5 +1,5 @@
 // src/components/downloads/download.tsx
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { 
   Download, 
@@ -13,7 +13,8 @@ import {
   Settings,
   RefreshCw
 } from "lucide-react";
-import { invokeCommand } from '../../lib/webview';
+import { invokeCommand } from '@/lib/webview';
+import { useDownloadHistory } from '@/hooks/downloadhistory';
 import DownloadsList from "./downloadlists";
 import AddDownload from "./adddownload";
 import { cn } from "@/lib/utils";
@@ -72,7 +73,7 @@ export interface DownloadItem {
   };
 }
 
-type DownloadStatus = 
+export type DownloadStatus = 
   | 'queued'
   | 'downloading'
   | 'paused'
@@ -92,15 +93,17 @@ interface FilterOptions {
 
 export function Downloads() {
   const { t } = useTranslation();
+  const { history, addToHistory, getHistory, clearHistory } = useDownloadHistory();
+  
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
-  const [downloadData, setDownloadData] = useState<DownloadItem[]>([]);
   const [activeDownloads, setActiveDownloads] = useState<DownloadItem[]>([]);
+  const [downloadData, setDownloadData] = useState<DownloadItem[]>([]);
   const [showDownloadModal, setShowDownloadModal] = useState<boolean>(false);
   const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [showStopConfirm, setShowStopConfirm] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [filters] = useState<FilterOptions>({
+  const [filters, setFilters] = useState<FilterOptions>({
     status: undefined,
     type: 'all',
     date: 'all',
@@ -131,7 +134,6 @@ export function Downloads() {
     }
   };
 
-
   // Handle download status updates
   const handleDownloadUpdate = useCallback((update: DownloadUpdate) => {
     switch (update.type) {
@@ -148,31 +150,30 @@ export function Downloads() {
         break;
 
       case 'complete':
-        setActiveDownloads(prev => 
-          prev.filter(item => item.videoId !== update.videoId)
-        );
-        setDownloadData(prev => [update, ...prev]);
-        break;
-
       case 'error':
+        addToHistory(update);
         setActiveDownloads(prev => 
           prev.filter(item => item.videoId !== update.videoId)
         );
         setDownloadData(prev => [update, ...prev]);
         break;
     }
-  }, []);
+  }, [addToHistory]);
 
   // Load download history
   const loadDownloadHistory = async () => {
     setIsLoading(true);
     try {
-      const history = await invokeCommand<DownloadItem[]>("get_download_history");
-      const active = history.filter(item => item.status === 'downloading');
-      const others = history.filter(item => item.status !== 'downloading');
+      const serverHistory = await invokeCommand<DownloadItem[]>("get_download_history");
+      
+      // Merge with local history
+      const active = serverHistory.filter(item => item.status === 'downloading');
+      const completed = getHistory({ 
+        status: ['completed', 'error', 'canceled']
+      });
       
       setActiveDownloads(active);
-      setDownloadData(others);
+      setDownloadData(completed);
     } catch (error) {
       console.error("Failed to load download history:", error);
     } finally {
@@ -190,6 +191,20 @@ export function Downloads() {
       setIsRefreshing(false);
     }
   };
+
+  // Filter downloads based on search and filters
+  const filteredDownloads = useMemo(() => {
+    return getHistory({
+      search: searchQuery,
+      status: filters.status,
+      dateRange: filters.date === 'today' 
+        ? { 
+            start: Date.now() - 24 * 60 * 60 * 1000, 
+            end: Date.now() 
+          }
+        : undefined
+    });
+  }, [searchQuery, filters, history, getHistory]);
 
   // Start a new download
   const handleAddDownload = async (url: string, formatId: string, options?: {
@@ -235,6 +250,7 @@ export function Downloads() {
   const handleClearHistory = async () => {
     try {
       await invokeCommand("clear_download_history");
+      clearHistory();
       setDownloadData([]);
       setShowClearConfirm(false);
     } catch (error) {
@@ -259,6 +275,14 @@ export function Downloads() {
     } catch (error) {
       console.error("Failed to open downloads folder:", error);
     }
+  };
+
+  // Apply filters
+  const handleFilterChange = (newFilters: Partial<FilterOptions>) => {
+    setFilters(prev => ({
+      ...prev,
+      ...newFilters
+    }));
   };
 
   return (
@@ -359,7 +383,13 @@ export function Downloads() {
               className="pl-9"
             />
           </div>
-          <Button variant="outline" size="icon">
+          <Button 
+            variant="outline" 
+            size="icon"
+            onClick={() => {
+              // Implement filter dialog/popover
+            }}
+          >
             <Filter className="h-4 w-4" />
           </Button>
         </div>
@@ -395,7 +425,7 @@ export function Downloads() {
         ) : (
           <div className="p-4">
             <DownloadsList
-              downloads={[...activeDownloads, ...downloadData]}
+              downloads={[...activeDownloads, ...filteredDownloads]}
               searchQuery={searchQuery}
               filters={filters}
               onStopDownload={handleStopDownload}

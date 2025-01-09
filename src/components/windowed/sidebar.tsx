@@ -4,7 +4,6 @@ import {
     ListOrdered,
     CheckCircle,
     HardDrive,
-    Network,
     RefreshCw,
     AlertCircle
 } from 'lucide-react';

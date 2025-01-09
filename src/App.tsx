@@ -9,6 +9,7 @@ import { useLocalStorageBoolean } from "./hooks/uselocalstorage";
 import "./utils/i18n";
 import { ThemeProvider } from "@/components/themeprovider"
 import StemExtractor from "./components/stemextractor/stemextract";
+import DonatePage from "./components/donate";
 
 function App() {
   const [hasSeenWelcome, setHasSeenWelcome] = useLocalStorageBoolean('has-seen-welcome', false);
@@ -34,6 +35,7 @@ function App() {
             <Route path="/" element={<Downloads />} />
             <Route path="/converter" element={<Converter />} />
             <Route path="/stem-extractor" element={<StemExtractor />} />
+            <Route path="/donate" element={<DonatePage />} />
             <Route
               path="*"
               element={
