@@ -44,6 +44,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import DownloadPng from "@/assets/downloader.png";
 
 export interface DownloadItem {
   id: string;
@@ -103,7 +104,7 @@ export function Downloads() {
   const [showClearConfirm, setShowClearConfirm] = useState(false);
   const [showStopConfirm, setShowStopConfirm] = useState(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [filters, setFilters] = useState<FilterOptions>({
+  const [filters] = useState<FilterOptions>({
     status: undefined,
     type: 'all',
     date: 'all',
@@ -278,12 +279,12 @@ export function Downloads() {
   };
 
   // Apply filters
-  const handleFilterChange = (newFilters: Partial<FilterOptions>) => {
-    setFilters(prev => ({
-      ...prev,
-      ...newFilters
-    }));
-  };
+  // const handleFilterChange = (newFilters: Partial<FilterOptions>) => {
+  //   setFilters(prev => ({
+  //     ...prev,
+  //     ...newFilters
+  //   }));
+  // };
 
   return (
     <div className="h-full flex flex-col bg-background">
@@ -411,7 +412,8 @@ export function Downloads() {
           </div>
         ) : activeDownloads.length === 0 && downloadData.length === 0 ? (
           <div className="h-[400px] flex flex-col items-center justify-center text-center p-4">
-            <Download className="h-12 w-12 text-muted-foreground mb-4" />
+            {/* <Download className="h-12 w-12 text-muted-foreground mb-4" /> */}
+            <img src={DownloadPng} alt="Download" className="h-64 -mb-10 text-muted-foreground" />
             <h3 className="font-semibold mb-2">
               {t('downloads.status.noDownloads')}
             </h3>

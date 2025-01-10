@@ -10,6 +10,7 @@ import "./utils/i18n";
 import { ThemeProvider } from "@/components/themeprovider"
 import StemExtractor from "./components/stemextractor/stemextract";
 import DonatePage from "./components/donate";
+import { preloadFonts } from "./utils/preloadfonts";
 
 function App() {
   const [hasSeenWelcome, setHasSeenWelcome] = useLocalStorageBoolean('has-seen-welcome', false);
@@ -20,6 +21,10 @@ function App() {
       setShowWelcome(true);
     }
   }, [hasSeenWelcome]);
+
+  useEffect(() => {
+    preloadFonts();
+  }, []);
 
   const handleCloseWelcome = () => {
     setHasSeenWelcome(true);

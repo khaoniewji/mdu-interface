@@ -13,8 +13,10 @@
     "electron:preview": "electron ."
   },
   "dependencies": {
+    "@elysiajs/swagger": "^1.2.0",
     "@heroicons/react": "^2.2.0",
     "@radix-ui/react-alert-dialog": "^1.1.4",
+    "@radix-ui/react-context-menu": "^2.2.4",
     "@radix-ui/react-dialog": "^1.1.4",
     "@radix-ui/react-dropdown-menu": "^2.1.4",
     "@radix-ui/react-label": "^2.1.1",
@@ -30,6 +32,7 @@
     "@radix-ui/react-tooltip": "^1.1.6",
     "axios": "^1.7.9",
     "check-disk-space": "^3.4.0",
+    "cheerio": "^1.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "content-disposition": "^0.5.4",
@@ -47,6 +50,7 @@
     "ipaddr.js": "^2.2.0",
     "lucide-react": "^0.469.0",
     "nanoid": "^5.0.9",
+    "node-fetch": "^3.3.2",
     "node-gyp": "^11.0.0",
     "node-wmi": "^0.0.5",
     "psl": "^1.15.0",

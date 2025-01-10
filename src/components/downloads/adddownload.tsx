@@ -1,8 +1,6 @@
-// src/components/downloads/adddownload.tsx
 import React, { useState } from "react";
 import { Video, Music, Download, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
-// import { invokeCommand } from '../../lib/webview';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,25 +11,20 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-// import { extractVideo, getBestVideoFormat, getBestAudioFormat } from '@/lib/mducore/extractvideo';
 
-interface Format {
-  format_id: string;
-  ext: string;
+interface VideoFormat {
   quality: string;
-  format_note?: string;
-  filesize?: number;
-  acodec?: string;
-  vcodec?: string;
+  format: string;
+  size: number;
+  url: string;
 }
 
 interface VideoInfo {
-  id: string;
   title: string;
-  formats: Format[];
-  thumbnail?: string;
-  duration?: number;
-  uploader?: string;
+  description: string;
+  duration: number;
+  thumbnail: string;
+  formats: VideoFormat[];
 }
 
 export interface DownloadOptions {
@@ -46,7 +39,7 @@ export interface DownloadOptions {
 interface AddDownloadProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddDownload: (url: string, formatId: string, options: DownloadOptions) => Promise<void>;
+  onAddDownload: (url: string, format: VideoFormat, options: DownloadOptions) => Promise<void>;
 }
 
 function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
@@ -90,14 +83,7 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
     setVideoInfo(null);
   };
 
-  const fetchVideoInfo = async (
-    url: string,
-    setError: (error: string | null) => void,
-    setIsLoading: (isLoading: boolean) => void,
-    setVideoInfo: (info: VideoInfo | null) => void,
-    setSelectedFormat: (formatId: string) => void,
-    t: (key: string) => string
-  ) => {
+  const fetchVideoInfo = async () => {
     if (!url.trim()) {
       setError(t("downloads.errors.emptyUrl"));
       return;
@@ -108,51 +94,27 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
     setVideoInfo(null);
 
     try {
-      const extractedInfo = await extractVideo(url.trim());
-
-      if (!extractedInfo || !extractedInfo.formats || extractedInfo.formats.length === 0) {
+      // Using the proxy path instead of the full URL
+      const response = await fetch(`/api/extract?url=${encodeURIComponent(url.trim())}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const videoData: VideoInfo = await response.json();
+      
+      if (!videoData || !videoData.formats || videoData.formats.length === 0) {
         throw new Error(t("downloads.errors.noFormatsFound"));
       }
 
-      // Process and reorganize formats
-      const processedFormats = extractedInfo.formats.map(format => ({
-        ...format,
-        // Ensure quality is properly formatted
-        quality: format.format_note || format.quality || 'unknown',
-        // Add additional format information if available
-        format_note: [
-          format.fps ? `${format.fps}fps` : null,
-          format.bitrate ? `${Math.round(format.bitrate / 1000)}kbps` : null,
-          format.filesize ? formatFileSize(format.filesize) : null
-        ].filter(Boolean).join(', ') || undefined
-      }));
-
-      // Sort formats by quality (video resolution or audio bitrate)
-      const sortedFormats = processedFormats.sort((a, b) => {
-        const aHeight = parseInt(a.quality.match(/\d+/)?.[0] || '0');
-        const bHeight = parseInt(b.quality.match(/\d+/)?.[0] || '0');
-        if (aHeight && bHeight) return bHeight - aHeight;
-        return b.bitrate || 0 - (a.bitrate || 0);
-      });
-
-      const videoInfo: VideoInfo = {
-        id: extractedInfo.id,
-        title: extractedInfo.title,
-        formats: sortedFormats,
-        thumbnail: extractedInfo.thumbnail,
-        duration: extractedInfo.duration,
-        uploader: extractedInfo.uploader
-      };
-
-      setVideoInfo(videoInfo);
-
-      // Select the best available format by default
-      const bestFormat = sortedFormats.find(f =>
-        f.vcodec !== 'none' && f.acodec !== 'none'
-      ) || sortedFormats[0];
-
+      setVideoInfo(videoData);
+      
+      // Select the highest quality format by default
+      const bestFormat = videoData.formats.find(f => 
+        f.quality.includes("1080") || f.quality.includes("720")
+      );
+      
       if (bestFormat) {
-        setSelectedFormat(bestFormat.format_id);
+        setSelectedFormat(bestFormat.url);
       }
 
     } catch (err) {
@@ -167,12 +129,14 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
     if (!videoInfo || !selectedFormat) return;
 
     try {
-      const format = videoInfo.formats.find(f => f.format_id === selectedFormat);
-      const isAudioOnly = format ? !format.vcodec || format.vcodec === 'none' : false;
+      const selectedVideoFormat = videoInfo.formats.find(f => f.url === selectedFormat);
+      if (!selectedVideoFormat) {
+        throw new Error("Selected format not found");
+      }
 
-      await onAddDownload(url, selectedFormat, {
+      await onAddDownload(url, selectedVideoFormat, {
         ...options,
-        isAudioOnly,
+        isAudioOnly: selectedVideoFormat.format === "audio",
         filename: videoInfo.title
       });
       handleClose();
@@ -182,7 +146,7 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
     }
   };
 
-  const formatFileSize = (bytes?: number) => {
+  const formatFileSize = (bytes: number) => {
     if (!bytes) return "Unknown size";
     const sizes = ["B", "KB", "MB", "GB"];
     const i = Math.floor(Math.log(bytes) / Math.log(1024));
@@ -199,63 +163,59 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
     }));
   };
 
-  const renderOptions = () => {
-    const settingOptions = [
-      {
-        key: "audioQuality" as const,
-        label: t("downloads.addModal.audioQuality"),
-        options: audioQualityOptions,
-        value: options.audioQuality,
-        format: (opt: string) => `${opt} kbps`,
-      },
-      {
-        key: "videoQuality" as const,
-        label: t("downloads.addModal.videoQuality"),
-        options: videoQualityOptions,
-        value: options.videoQuality,
-        format: (opt: string) => `${opt}p`,
-      },
-      {
-        key: "format" as const,
-        label: t("downloads.addModal.format"),
-        options: formatOptions,
-        value: options.format,
-        format: (opt: string) => opt.toUpperCase(),
-      },
-    ];
-
-    return (
-      <div className="space-y-4">
-        <Label className="text-sm text-muted-foreground">
-          {t("downloads.addModal.downloadOptions")}
-        </Label>
-        <div className="grid grid-cols-3 gap-4">
-          {settingOptions.map((setting) => (
-            <div key={setting.key} className="space-y-2">
-              <Label>{setting.label}</Label>
-              <Select
-                value={setting.value}
-                onValueChange={(value) =>
-                  handleOptionChange(setting.key, value)
-                }
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {setting.options.map((option) => (
-                    <SelectItem key={option} value={option}>
-                      {setting.format(option)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          ))}
-        </div>
+  const renderOptions = () => (
+    <div className="space-y-2">
+      <Label className="text-sm text-muted-foreground">
+        {t("downloads.addModal.downloadOptions")}
+      </Label>
+      <div className="grid grid-cols-3 gap-4">
+        {[
+          {
+            key: "audioQuality" as const,
+            label: t("downloads.addModal.audioQuality"),
+            options: audioQualityOptions,
+            value: options.audioQuality,
+            format: (opt: string) => `${opt} kbps`,
+          },
+          {
+            key: "videoQuality" as const,
+            label: t("downloads.addModal.videoQuality"),
+            options: videoQualityOptions,
+            value: options.videoQuality,
+            format: (opt: string) => `${opt}p`,
+          },
+          {
+            key: "format" as const,
+            label: t("downloads.addModal.format"),
+            options: formatOptions,
+            value: options.format,
+            format: (opt: string) => opt.toUpperCase(),
+          },
+        ].map((setting) => (
+          <div key={setting.key} className="space-y-2">
+            <Label>{setting.label}</Label>
+            <Select
+              value={setting.value}
+              onValueChange={(value) =>
+                handleOptionChange(setting.key, value)
+              }
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {setting.options.map((option) => (
+                  <SelectItem key={option} value={option}>
+                    {setting.format(option)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        ))}
       </div>
-    );
-  };
+    </div>
+  );
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
@@ -264,7 +224,7 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
           <DialogTitle>{t("downloads.addModal.title")}</DialogTitle>
         </DialogHeader>
 
-        <div className="space-y-6 py-4">
+        <div className="space-y-2 py-1">
           <div className="flex gap-2">
             <Input
               value={url}
@@ -272,7 +232,7 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
               placeholder={t("downloads.addModal.urlPlaceholder")}
               className="flex-1"
             />
-            <Button onClick={() => fetchVideoInfo(url, setError, setIsLoading, setVideoInfo, setSelectedFormat, t)} disabled={isLoading || !url.trim()}>
+            <Button onClick={fetchVideoInfo} disabled={isLoading || !url.trim()}>
               {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               {isLoading ? t("common.loading") : t("downloads.addModal.fetch")}
             </Button>
@@ -289,7 +249,7 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
               <Loader2 className="w-8 h-8 animate-spin" />
             </div>
           ) : videoInfo && (
-            <div className="space-y-6">
+            <div className="space-y-2">
               <Card>
                 <CardContent className="flex gap-4 p-4">
                   {videoInfo.thumbnail && (
@@ -301,9 +261,7 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
                   )}
                   <div className="flex-1 space-y-1">
                     <h3 className="font-medium line-clamp-2">{videoInfo.title}</h3>
-                    {videoInfo.uploader && (
-                      <p className="text-sm text-muted-foreground">{videoInfo.uploader}</p>
-                    )}
+                    <p className="text-sm text-muted-foreground line-clamp-2">{videoInfo.description}</p>
                     {videoInfo.duration && (
                       <p className="text-sm text-muted-foreground">
                         {Math.floor(videoInfo.duration / 60)}:
@@ -316,34 +274,34 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
 
               {renderOptions()}
 
-              <div className="space-y-2">
+              <div className="space-y-0">
                 <Label>{t("downloads.addModal.selectFormat")}</Label>
                 <ScrollArea className="h-[300px] rounded-md border">
                   <RadioGroup
                     value={selectedFormat}
                     onValueChange={setSelectedFormat}
-                    className="space-y-1 p-1"
+                    className="space-y-0 p-1"
                   >
                     {videoInfo.formats.map((format) => (
                       <div
-                        key={format.format_id}
+                        key={format.url}
                         className={cn(
-                          "p-3 rounded-lg transition-colors",
-                          selectedFormat === format.format_id
+                          "p-2 px-3 flex items-center space-x-3 w-full rounded-lg transition-colors ",
+                          selectedFormat === format.url
                             ? "bg-secondary"
                             : "hover:bg-secondary/50"
                         )}
                       >
                         <RadioGroupItem
-                          value={format.format_id}
-                          id={format.format_id}
+                          value={format.url}
+                          id={format.url}
                           className="peer"
                         />
                         <Label
-                          htmlFor={format.format_id}
-                          className="flex items-center gap-3 cursor-pointer"
+                          htmlFor={format.url}
+                          className="flex items-center w-full justify-between gap-3 cursor-pointer"
                         >
-                          {format.vcodec && format.acodec ? (
+                          {format.format.includes("video") ? (
                             <Video className="w-4 h-4" />
                           ) : (
                             <Music className="w-4 h-4" />
@@ -352,12 +310,11 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
                             <div className="flex items-center justify-between">
                               <span>{format.quality}</span>
                               <span className="text-muted-foreground">
-                                {formatFileSize(format.filesize)}
+                                {formatFileSize(format.size)}
                               </span>
                             </div>
                             <span className="text-sm text-muted-foreground">
-                              {format.ext.toUpperCase()}
-                              {format.format_note && ` - ${format.format_note}`}
+                              {format.format.toUpperCase()}
                             </span>
                           </div>
                         </Label>
