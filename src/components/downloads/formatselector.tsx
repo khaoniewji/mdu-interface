@@ -17,20 +17,19 @@ interface VideoFormat {
 }
 
 interface VideoInfo {
-  title: string;
-  description: string;
-  duration: number;
-  thumbnail: string;
+  title?: string;
+  description?: string;
+  duration?: number;
+  thumbnail?: string;
   formats: VideoFormat[];
 }
 
 interface FormatSelectorProps {
   videoInfo: VideoInfo | null;
   selectedFormat: string;
-  onFormatSelect: (format: string) => void;
+  onFormatSelect: (formatUrl: string) => void;
   formatFileSize: (size: number) => string;
 }
-
 const FormatSelector: React.FC<FormatSelectorProps> = ({ 
   videoInfo, 
   selectedFormat, 

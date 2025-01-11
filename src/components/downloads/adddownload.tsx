@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 // import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -12,23 +12,7 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Card, CardContent } from "@/components/ui/card";
 // import { cn } from "@/lib/utils";
 import FormatSelector from "./formatselector";
-
-interface VideoFormat {
-  quality: string;
-  format: string;
-  size: number;
-  url: string;
-  mimeType: string;
-  type: string;
-}
-
-interface VideoInfo {
-  title: string;
-  description: string;
-  duration: number;
-  thumbnail: string;
-  formats: VideoFormat[];
-}
+import { VideoFormat, VideoInfo } from '@/types/video';
 
 export interface DownloadOptions {
   outputPath?: string;
@@ -60,9 +44,9 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
     format: "mp4",
   });
 
-  const audioQualityOptions = ["64", "128", "192", "256", "320"];
-  const videoQualityOptions = ["480", "720", "1080", "1440", "2160"];
-  const formatOptions = ["mp4", "mkv", "webm"];
+  // const audioQualityOptions = ["64", "128", "192", "256", "320"];
+  // const videoQualityOptions = ["480", "720", "1080", "1440", "2160"];
+  // const formatOptions = ["mp4", "mkv", "webm"];
 
   const resetState = () => {
     setUrl("");
@@ -99,27 +83,49 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
     setVideoInfo(null);
 
     try {
-      // Using the proxy path instead of the full URL
       const response = await fetch(`/api/extract?url=${encodeURIComponent(url.trim())}`);
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const videoData: VideoInfo = await response.json();
+      const apiResponse = await response.json();
+      console.log('API Response:', apiResponse); // For debugging
 
-      if (!videoData || !videoData.formats || videoData.formats.length === 0) {
+      // Check if the API response contains the required data
+      if (!apiResponse.success || !apiResponse.data || !apiResponse.data.formats) {
+        throw new Error(t("downloads.errors.noFormatsFound"));
+      }
+
+      const { data } = apiResponse;
+
+      // Create VideoFormat objects from the API response
+      const formats: VideoFormat[] = data.formats.map((format: any) => ({
+        quality: format.quality || '',
+        format: format.format || '',
+        size: format.size || 0,
+        url: format.url || '',
+        mimeType: format.mimeType || '',
+        type: format.type || 'video'
+      }));
+
+      // Construct the VideoInfo object
+      const videoData: VideoInfo = {
+        title: data.title || "Untitled",
+        description: data.description || "",
+        duration: data.duration || 0,
+        thumbnail: data.thumbnail || "",
+        formats: formats
+      };
+
+      if (formats.length === 0) {
         throw new Error(t("downloads.errors.noFormatsFound"));
       }
 
       setVideoInfo(videoData);
 
-      // Select the highest quality format by default
-      const bestFormat = videoData.formats.find(f =>
-        f.quality.includes("1080") || f.quality.includes("720")
-      );
-
-      if (bestFormat) {
-        setSelectedFormat(bestFormat.url);
+      // Select the first available format by default
+      if (formats.length > 0) {
+        setSelectedFormat(formats[0].url);
       }
 
     } catch (err) {
@@ -141,7 +147,7 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
 
       await onAddDownload(url, selectedVideoFormat, {
         ...options,
-        isAudioOnly: selectedVideoFormat.format === "audio",
+        isAudioOnly: selectedVideoFormat.type === "audio",
         filename: videoInfo.title
       });
       handleClose();
@@ -158,70 +164,15 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
     return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sizes[i]}`;
   };
 
-  const handleOptionChange = (
-    key: keyof DownloadOptions,
-    value: string
-  ) => {
-    setOptions(prev => ({
-      ...prev,
-      [key]: value
-    }));
-  };
-
-
-  const renderOptions = () => (
-    <div className="space-y-2">
-      <Label className="text-sm text-muted-foreground">
-        {t("downloads.addModal.downloadOptions")}
-      </Label>
-      <div className="grid grid-cols-3 gap-4">
-        {[
-          {
-            key: "audioQuality" as const,
-            label: t("downloads.addModal.audioQuality"),
-            options: audioQualityOptions,
-            value: options.audioQuality,
-            format: (opt: string) => `${opt} kbps`,
-          },
-          {
-            key: "videoQuality" as const,
-            label: t("downloads.addModal.videoQuality"),
-            options: videoQualityOptions,
-            value: options.videoQuality,
-            format: (opt: string) => `${opt}p`,
-          },
-          {
-            key: "format" as const,
-            label: t("downloads.addModal.format"),
-            options: formatOptions,
-            value: options.format,
-            format: (opt: string) => opt.toUpperCase(),
-          },
-        ].map((setting) => (
-          <div key={setting.key} className="space-y-2">
-            <Label>{setting.label}</Label>
-            <Select
-              value={setting.value}
-              onValueChange={(value) =>
-                handleOptionChange(setting.key, value)
-              }
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {setting.options.map((option) => (
-                  <SelectItem key={option} value={option}>
-                    {setting.format(option)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
+  // const handleOptionChange = (
+  //   key: keyof DownloadOptions,
+  //   value: string
+  // ) => {
+  //   setOptions(prev => ({
+  //     ...prev,
+  //     [key]: value
+  //   }));
+  // };
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
@@ -269,11 +220,11 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
                     <h3 className="font-medium line-clamp-2">{videoInfo.title}</h3>
                     <p className="text-sm text-muted-foreground line-clamp-2">{videoInfo.description}</p>
                     {videoInfo.duration && (
-                        <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-muted-foreground">
                         {Math.floor(videoInfo.duration / 3600)}:
                         {Math.floor((videoInfo.duration % 3600) / 60).toString().padStart(2, "0")}:
                         {(videoInfo.duration % 60).toString().padStart(2, "0")}
-                        </p>
+                      </p>
                     )}
                   </div>
                 </CardContent>
