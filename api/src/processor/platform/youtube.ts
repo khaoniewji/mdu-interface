@@ -13,6 +13,8 @@ interface VideoInfo {
 interface VideoFormat {
     quality: string;
     format: string;
+    mimeType: string;
+    type: 'audio' | 'video';
     size: number;
     url: string;
 }
@@ -42,7 +44,20 @@ export async function extractYouTubeVideo(url: string, format?: string, quality?
     }
 }
 
-// New function to list all available formats
+// Function to get formats by media type
+export async function getFormatsByType(url: string, type: 'audio' | 'video'): Promise<VideoFormat[]> {
+    try {
+        const videoId = extractVideoId(url);
+        const videoInfo = await fetchVideoInfo(videoId);
+        return videoInfo.formats.filter(format => format.type === type);
+    } catch (error) {
+        if (error instanceof Error) {
+            throw new Error(`Failed to get ${type} formats: ${error.message}`);
+        }
+        throw new Error(`Failed to get ${type} formats: Unknown error`);
+    }
+}
+
 export async function listAvailableFormats(url: string): Promise<VideoFormat[]> {
     try {
         const videoId = extractVideoId(url);
@@ -83,7 +98,6 @@ async function fetchVideoInfo(videoId: string): Promise<VideoInfo> {
         const html = await response.text();
         const $ = cheerio.load(html);
         
-        // Extract video metadata from JSON-LD
         const jsonLd = $('script[type="application/ld+json"]').html();
         let videoData = {};
         if (jsonLd) {
@@ -94,7 +108,6 @@ async function fetchVideoInfo(videoId: string): Promise<VideoInfo> {
             }
         }
 
-        // Extract player response data
         const playerResponseMatch = html.match(/ytInitialPlayerResponse\s*=\s*({.+?})\s*;/);
         let playerResponse = {};
         if (playerResponseMatch) {
@@ -132,6 +145,15 @@ async function fetchVideoInfo(videoId: string): Promise<VideoInfo> {
     }
 }
 
+function getMimeType(mimeTypeStr: string): { mimeType: string; type: 'audio' | 'video' } {
+    const parts = mimeTypeStr?.split(';')[0].split('/') || ['', ''];
+    const type = parts[0] === 'audio' ? 'audio' : 'video';
+    return {
+        mimeType: parts.join('/'),
+        type
+    };
+}
+
 function extractFormatsFromPlayerResponse(playerResponse: any): VideoFormat[] {
     const formats: VideoFormat[] = [];
     
@@ -143,11 +165,14 @@ function extractFormatsFromPlayerResponse(playerResponse: any): VideoFormat[] {
         const adaptiveFormats = streamingData.adaptiveFormats || [];
         adaptiveFormats.forEach((format: any) => {
             if (format.url || format.signatureCipher) {
+                const { mimeType, type } = getMimeType(format.mimeType);
                 formats.push({
                     quality: format.qualityLabel || format.quality,
-                    format: format.mimeType?.split(';')[0].split('/')[1] || 'unknown',
+                    format: mimeType.split('/')[1] || 'unknown',
+                    mimeType,
+                    type,
                     size: format.contentLength ? parseInt(format.contentLength) : 0,
-                    url: format.url || ''  // You might need to decode signatureCipher if url is not available
+                    url: format.url || ''
                 });
             }
         });
@@ -156,9 +181,12 @@ function extractFormatsFromPlayerResponse(playerResponse: any): VideoFormat[] {
         const regularFormats = streamingData.formats || [];
         regularFormats.forEach((format: any) => {
             if (format.url || format.signatureCipher) {
+                const { mimeType, type } = getMimeType(format.mimeType);
                 formats.push({
                     quality: format.qualityLabel || format.quality,
-                    format: format.mimeType?.split(';')[0].split('/')[1] || 'unknown',
+                    format: mimeType.split('/')[1] || 'unknown',
+                    mimeType,
+                    type,
                     size: format.contentLength ? parseInt(format.contentLength) : 0,
                     url: format.url || ''
                 });

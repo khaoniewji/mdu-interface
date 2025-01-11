@@ -1,22 +1,25 @@
 import React, { useState } from "react";
-import { Video, Music, Download, Loader2 } from "lucide-react";
+import { Download, Loader2 } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+// import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ScrollArea } from "@/components/ui/scroll-area";
+// import { ScrollArea } from "@/components/ui/scroll-area";
 import { Card, CardContent } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+// import { cn } from "@/lib/utils";
+import FormatSelector from "./formatselector";
 
 interface VideoFormat {
   quality: string;
   format: string;
   size: number;
   url: string;
+  mimeType: string;
+  type: string;
 }
 
 interface VideoInfo {
@@ -41,6 +44,8 @@ interface AddDownloadProps {
   onClose: () => void;
   onAddDownload: (url: string, format: VideoFormat, options: DownloadOptions) => Promise<void>;
 }
+
+
 
 function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
   const { t } = useTranslation();
@@ -99,20 +104,20 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const videoData: VideoInfo = await response.json();
-      
+
       if (!videoData || !videoData.formats || videoData.formats.length === 0) {
         throw new Error(t("downloads.errors.noFormatsFound"));
       }
 
       setVideoInfo(videoData);
-      
+
       // Select the highest quality format by default
-      const bestFormat = videoData.formats.find(f => 
+      const bestFormat = videoData.formats.find(f =>
         f.quality.includes("1080") || f.quality.includes("720")
       );
-      
+
       if (bestFormat) {
         setSelectedFormat(bestFormat.url);
       }
@@ -162,6 +167,7 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
       [key]: value
     }));
   };
+
 
   const renderOptions = () => (
     <div className="space-y-2">
@@ -263,65 +269,26 @@ function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
                     <h3 className="font-medium line-clamp-2">{videoInfo.title}</h3>
                     <p className="text-sm text-muted-foreground line-clamp-2">{videoInfo.description}</p>
                     {videoInfo.duration && (
-                      <p className="text-sm text-muted-foreground">
-                        {Math.floor(videoInfo.duration / 60)}:
+                        <p className="text-sm text-muted-foreground">
+                        {Math.floor(videoInfo.duration / 3600)}:
+                        {Math.floor((videoInfo.duration % 3600) / 60).toString().padStart(2, "0")}:
                         {(videoInfo.duration % 60).toString().padStart(2, "0")}
-                      </p>
+                        </p>
                     )}
                   </div>
                 </CardContent>
               </Card>
 
-              {renderOptions()}
+              {/* {renderOptions()} */}
 
               <div className="space-y-0">
                 <Label>{t("downloads.addModal.selectFormat")}</Label>
-                <ScrollArea className="h-[300px] rounded-md border">
-                  <RadioGroup
-                    value={selectedFormat}
-                    onValueChange={setSelectedFormat}
-                    className="space-y-0 p-1"
-                  >
-                    {videoInfo.formats.map((format) => (
-                      <div
-                        key={format.url}
-                        className={cn(
-                          "p-2 px-3 flex items-center space-x-3 w-full rounded-lg transition-colors ",
-                          selectedFormat === format.url
-                            ? "bg-secondary"
-                            : "hover:bg-secondary/50"
-                        )}
-                      >
-                        <RadioGroupItem
-                          value={format.url}
-                          id={format.url}
-                          className="peer"
-                        />
-                        <Label
-                          htmlFor={format.url}
-                          className="flex items-center w-full justify-between gap-3 cursor-pointer"
-                        >
-                          {format.format.includes("video") ? (
-                            <Video className="w-4 h-4" />
-                          ) : (
-                            <Music className="w-4 h-4" />
-                          )}
-                          <div className="flex-1">
-                            <div className="flex items-center justify-between">
-                              <span>{format.quality}</span>
-                              <span className="text-muted-foreground">
-                                {formatFileSize(format.size)}
-                              </span>
-                            </div>
-                            <span className="text-sm text-muted-foreground">
-                              {format.format.toUpperCase()}
-                            </span>
-                          </div>
-                        </Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
-                </ScrollArea>
+                <FormatSelector
+                  videoInfo={videoInfo}
+                  selectedFormat={selectedFormat}
+                  onFormatSelect={setSelectedFormat}
+                  formatFileSize={formatFileSize}
+                />
               </div>
             </div>
           )}

@@ -268,7 +268,6 @@ export function Downloads() {
       console.error("Failed to stop all downloads:", error);
     }
   };
-
   // Open downloads folder
   const handleOpenFolder = async () => {
     try {

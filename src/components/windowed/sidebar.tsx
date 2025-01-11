@@ -84,10 +84,7 @@ function Sidebar() {
 
     const updateStats = (stats: SystemStats) => {
         if (stats.drives.length > 0) {
-            setDrives(prevDrives => {
-                // Only update if we have new valid data
-                return stats.drives.length > 0 ? stats.drives : prevDrives;
-            });
+            setDrives(prevDrives => stats.drives.length > 0 ? stats.drives : prevDrives);
         }
         setNetworkSpeed(stats.network);
         setCounts(stats.counts);
@@ -101,7 +98,6 @@ function Sidebar() {
                     updateStats(stats);
                 },
                 onError: (errorMessage: string) => {
-                    // Only show error if we have no drives data
                     if (drives.length === 0) {
                         setError(errorMessage);
                     }
@@ -125,7 +121,6 @@ function Sidebar() {
             updateStats(stats);
         } catch (error) {
             console.error('Failed to refresh stats:', error);
-            // Only show error if we have no drives data
             if (drives.length === 0) {
                 setError(t('sidebar.drives.error.loading'));
             }
@@ -135,16 +130,16 @@ function Sidebar() {
     };
 
     return (
-        <div className="w-64 h-full bg-white border-r border-gray-200 flex flex-col dark:bg-zinc-950 dark:border-zinc-800">
+        <div className="w-64 h-full border-r bg-background border-border">
             <div className="flex-1 space-y-6 p-4">
                 {/* Categories Section */}
-                <div className="space-y-0">
+                <div className="space-y-1">
                     <div className="px-2 py-1.5">
-                        <h2 className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                        <h2 className="text-xs font-medium text-muted-foreground">
                             {t('sidebar.categories.title')}
                         </h2>
                     </div>
-                    <nav className="space-y-0.5">
+                    <nav className="space-y-1">
                         {[
                             { icon: Download, label: 'downloads', count: counts.downloads },
                             { icon: ListOrdered, label: 'queue', count: counts.queue },
@@ -152,14 +147,14 @@ function Sidebar() {
                         ].map(({ icon: Icon, label, count }) => (
                             <button
                                 key={label}
-                                className="w-full flex items-center px-2 py-1 text-sm text-gray-600 hover:bg-gray-50 rounded-md group transition-colors dark:text-gray-300 dark:hover:bg-zinc-900"
+                                className="w-full flex items-center px-2 py-1.5 text-sm text-foreground/70 hover:bg-accent hover:text-accent-foreground rounded-md group transition-colors"
                             >
-                                <div className="flex items-center">
-                                    <Icon className="w-4 h-4 mr-3 text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-200" />
-                                    <span className="flex-1">{t(`sidebar.categories.${label}`)}</span>
+                                <div className="flex items-center flex-1">
+                                    <Icon className="w-4 h-4 mr-3 text-muted-foreground group-hover:text-foreground" />
+                                    <span>{t(`sidebar.categories.${label}`)}</span>
                                 </div>
                                 {count > 0 && (
-                                    <span className="text-xs text-gray-400 tabular-nums">
+                                    <span className="text-xs text-muted-foreground tabular-nums">
                                         {count}
                                     </span>
                                 )}
@@ -169,14 +164,14 @@ function Sidebar() {
                 </div>
 
                 {/* Drive Status Section */}
-                <div className="space-y-1">
+                <div className="space-y-2">
                     <div className="px-2 flex items-center justify-between">
-                        <h2 className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                        <h2 className="text-xs font-medium text-muted-foreground">
                             {t('sidebar.drives.title')}
                         </h2>
                         <button
                             onClick={handleRefresh}
-                            className="p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-md transition-colors dark:hover:bg-zinc-900 dark:hover:text-gray-200"
+                            className="p-1 text-muted-foreground hover:text-foreground hover:bg-accent rounded-md transition-colors"
                             disabled={isRefreshing}
                         >
                             <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
@@ -184,42 +179,42 @@ function Sidebar() {
                     </div>
 
                     {error && drives.length === 0 && (
-                        <div className="mx-2 p-2 bg-red-50 border border-red-100 rounded-md dark:bg-red-900/10 dark:border-red-900/20">
-                            <p className="text-xs text-red-600 flex items-center dark:text-red-400">
+                        <div className="mx-2 p-2 bg-destructive/10 border border-destructive/20 rounded-md">
+                            <p className="text-xs text-destructive flex items-center">
                                 <AlertCircle className="w-3.5 h-3.5 mr-2" />
                                 {error}
                             </p>
                         </div>
                     )}
 
-                    <div className="space-y-1 px-2">
+                    <div className="space-y-3 px-2">
                         {isInitialLoad ? (
-                            <div className="text-sm text-gray-400 animate-pulse">
+                            <div className="text-sm text-muted-foreground animate-pulse">
                                 {t('sidebar.drives.loading')}
                             </div>
                         ) : (
                             drives.map((drive, index) => (
-                                <div key={`${drive.name}-${index}`} className="space-y-1.5">
+                                <div key={`${drive.name}-${index}`} className="space-y-2">
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center space-x-2">
-                                            <HardDrive className="w-3.5 h-3.5 text-gray-400" />
-                                            <span className="text-sm text-gray-600 dark:text-gray-300">
+                                            <HardDrive className="w-3.5 h-3.5 text-muted-foreground" />
+                                            <span className="text-sm text-foreground">
                                                 {drive.name}
                                             </span>
                                         </div>
-                                        <span className="text-xs text-gray-400 tabular-nums">
+                                        <span className="text-xs text-muted-foreground tabular-nums">
                                             {calculateUsagePercentage(drive.total_space, drive.available_space)}%
                                         </span>
                                     </div>
-                                    <div className="w-full h-1 bg-gray-100 rounded-full overflow-hidden dark:bg-zinc-800">
+                                    <div className="w-full h-1 bg-secondary rounded-full overflow-hidden">
                                         <div
-                                            className="h-full bg-gray-700 rounded-full transition-all duration-300 dark:bg-gray-400"
+                                            className="h-full bg-primary rounded-full transition-all duration-300"
                                             style={{
                                                 width: `${calculateUsagePercentage(drive.total_space, drive.available_space)}%`
                                             }}
                                         />
                                     </div>
-                                    <div className="flex justify-between text-xs text-gray-400">
+                                    <div className="flex justify-between text-xs text-muted-foreground">
                                         <span>{formatBytes(drive.available_space)} free</span>
                                         <span>{formatBytes(drive.total_space)} total</span>
                                     </div>
@@ -229,28 +224,22 @@ function Sidebar() {
                     </div>
                 </div>
 
-                {/* Network Status Section remains unchanged */}
-                <div className="space-y-0">
+                {/* Network Status Section */}
+                <div className="space-y-1">
                     <div className="px-2 py-1.5">
-                        <h2 className="text-xs font-medium text-gray-500 dark:text-gray-400">
+                        <h2 className="text-xs font-medium text-muted-foreground">
                             {t('sidebar.network.title')}
                         </h2>
                     </div>
-                    <div className=" px-2">
-                        {/* <div className="flex items-center space-x-2 ">
-                            <Network className="w-3.5 h-3.5 text-gray-400" />
-                            <span className="text-sm text-gray-600 dark:text-gray-300">
-                                {t('sidebar.network.speed')}
-                            </span>
-                        </div> */}
+                    <div className="px-2">
                         <div className="grid grid-cols-2 gap-2 text-sm">
-                            <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+                            <div className="flex items-center space-x-2 text-foreground">
                                 <span>↓</span>
                                 <span className="tabular-nums text-xs">
                                     {networkSpeed.download.toFixed(1)} MB/s
                                 </span>
                             </div>
-                            <div className="flex items-center space-x-2 text-gray-600 dark:text-gray-300">
+                            <div className="flex items-center space-x-2 text-foreground">
                                 <span>↑</span>
                                 <span className="tabular-nums text-xs">
                                     {networkSpeed.upload.toFixed(1)} MB/s

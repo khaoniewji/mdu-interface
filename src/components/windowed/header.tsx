@@ -1,5 +1,5 @@
 // src/components/windowed/header.tsx
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {
@@ -129,6 +129,16 @@ function Header() {
     const location = useLocation();
     const { t } = useTranslation();
     const [showSettings, setShowSettings] = useState(false);
+    const [platform, setPlatform] = useState('win32');
+
+    useEffect(() => {
+        // Detect platform on component mount
+        if (window.electron?.ipcRenderer) {
+            window.electron.ipcRenderer.invoke('get-platform').then((os: string) => {
+                setPlatform(os);
+            });
+        }
+    }, []);
 
     const menuItems = [
         {
@@ -148,17 +158,15 @@ function Header() {
         }
     ];
 
-    // const handleWindowControl = (action: 'minimize' | 'maximize' | 'close') => {
-    //     if (window.electron) {
-    //         window.electron[action]?.();
-    //     }
-    // };
-
     return (
         <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="flex h-12 items-center z-[9999] titlebar-drag-region">
-                {/* Left: Menu Bar with modern styling */}
-                <div className="flex-none pl-3 pr-2 titlebar-no-drag">
+            <div className={`flex h-12 items-center z-[9999] titlebar-drag-region ${
+                platform === 'darwin' ? 'pl-[80px]' : ''
+            }`}>
+                {/* Left: Menu Bar with platform-specific padding */}
+                <div className={`flex-none titlebar-no-drag ${
+                    platform === 'darwin' ? 'pl-2' : 'pl-3'
+                } pr-2`}>
                     <MenuBar />
                 </div>
 
@@ -198,9 +206,10 @@ function Header() {
                     </div>
                 </div>
 
-                {/* Right: Donate Button and Window Controls */}
-                <div className="flex-none pl-2 pr-[140px] titlebar-no-drag flex items-center gap-2">
-                    {/* Donate Button */}
+                {/* Right: Donate Button + platform-specific padding */}
+                <div className={`flex-none pl-2 titlebar-no-drag flex items-center gap-2 ${
+                    platform === 'darwin' ? 'pr-3' : 'pr-[140px]'
+                }`}>
                     <Button
                         variant="ghost"
                         size="sm"
@@ -225,5 +234,6 @@ function Header() {
         </div>
     );
 }
+
 
 export default Header;
