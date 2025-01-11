@@ -7,7 +7,7 @@ interface DownloadHistoryItem extends DownloadItem {
 }
 
 export function useDownloadHistory(maxItems: number = 1000) {
-  const [history, { add: addToStorage, clear }] = useLocalStorageArray<DownloadHistoryItem>(
+  const [history, addToStorage, remove] = useLocalStorageArray<DownloadHistoryItem>(
     'download-history',
     []
   );
@@ -58,8 +58,9 @@ export function useDownloadHistory(maxItems: number = 1000) {
   };
 
   const clearHistory = () => {
-    clear();
+    remove(); // Use remove instead of clear
   };
+
 
   return {
     history,

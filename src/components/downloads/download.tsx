@@ -1,11 +1,11 @@
 // src/components/downloads/download.tsx
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { 
-  Download, 
-  StopCircle, 
-  Trash2, 
-  Plus, 
+import {
+  Download,
+  StopCircle,
+  Trash2,
+  Plus,
   Search,
   MoreVertical,
   Filter,
@@ -45,7 +45,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import DownloadPng from "@/assets/downloader.png";
-
+import { VideoFormat} from '@/types/video';
 export interface DownloadItem {
   id: string;
   fileName: string;
@@ -73,8 +73,16 @@ export interface DownloadItem {
     acodec?: string;
   };
 }
+export interface DownloadOptions {
+  outputPath?: string;
+  isAudioOnly?: boolean;
+  filename?: string;
+  audioQuality: string;
+  videoQuality: string;
+  format: string;
+}
 
-export type DownloadStatus = 
+export type DownloadStatus =
   | 'queued'
   | 'downloading'
   | 'paused'
@@ -95,7 +103,7 @@ interface FilterOptions {
 export function Downloads() {
   const { t } = useTranslation();
   const { history, addToHistory, getHistory, clearHistory } = useDownloadHistory();
-  
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [activeDownloads, setActiveDownloads] = useState<DownloadItem[]>([]);
@@ -114,7 +122,7 @@ export function Downloads() {
   useEffect(() => {
     loadDownloadHistory();
     const unsubscribePromise = setupDownloadListener();
-    
+
     return () => {
       unsubscribePromise.then(unsubscribe => {
         if (unsubscribe) unsubscribe();
@@ -153,7 +161,7 @@ export function Downloads() {
       case 'complete':
       case 'error':
         addToHistory(update);
-        setActiveDownloads(prev => 
+        setActiveDownloads(prev =>
           prev.filter(item => item.videoId !== update.videoId)
         );
         setDownloadData(prev => [update, ...prev]);
@@ -166,13 +174,13 @@ export function Downloads() {
     setIsLoading(true);
     try {
       const serverHistory = await invokeCommand<DownloadItem[]>("get_download_history");
-      
+
       // Merge with local history
       const active = serverHistory.filter(item => item.status === 'downloading');
-      const completed = getHistory({ 
+      const completed = getHistory({
         status: ['completed', 'error', 'canceled']
       });
-      
+
       setActiveDownloads(active);
       setDownloadData(completed);
     } catch (error) {
@@ -198,34 +206,30 @@ export function Downloads() {
     return getHistory({
       search: searchQuery,
       status: filters.status,
-      dateRange: filters.date === 'today' 
-        ? { 
-            start: Date.now() - 24 * 60 * 60 * 1000, 
-            end: Date.now() 
-          }
+      dateRange: filters.date === 'today'
+        ? {
+          start: Date.now() - 24 * 60 * 60 * 1000,
+          end: Date.now()
+        }
         : undefined
     });
   }, [searchQuery, filters, history, getHistory]);
 
   // Start a new download
-  const handleAddDownload = async (url: string, formatId: string, options?: {
-    outputPath?: string;
-    isAudioOnly?: boolean;
-    filename?: string;
-  }) => {
+  const handleAddDownload = async (url: string, format: VideoFormat, options: DownloadOptions) => {
     try {
       const downloadDir = options?.outputPath || await invokeCommand<string>("get_downloads_dir");
-      
-      await invokeCommand("start_download", { 
-        url, 
-        formatId,
+
+      await invokeCommand("start_download", {
+        url,
+        formatId: format.url, // Use format.url instead of formatId
         options: {
           outputPath: downloadDir,
-          isAudioOnly: options?.isAudioOnly ?? formatId.startsWith('audio'),
+          isAudioOnly: options?.isAudioOnly ?? format.type === 'audio',
           filename: options?.filename,
         }
       });
-      
+
       setShowDownloadModal(false);
     } catch (error) {
       console.error("Failed to start download:", error);
@@ -343,9 +347,9 @@ export function Downloads() {
                   <FolderOpen className="h-4 w-4 mr-2" />
                   {t('downloads.actions.openFolder')}
                 </DropdownMenuItem>
-                
+
                 <DropdownMenuSeparator />
-                
+
                 <DropdownMenuItem
                   disabled={activeDownloads.length === 0}
                   onClick={() => setShowStopConfirm(true)}
@@ -353,7 +357,7 @@ export function Downloads() {
                   <StopCircle className="h-4 w-4 mr-2" />
                   {t('downloads.actions.stopAll')}
                 </DropdownMenuItem>
-                
+
                 <DropdownMenuItem
                   disabled={downloadData.length === 0}
                   onClick={() => setShowClearConfirm(true)}
@@ -383,8 +387,8 @@ export function Downloads() {
               className="pl-9"
             />
           </div>
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             size="icon"
             onClick={() => {
               // Implement filter dialog/popover

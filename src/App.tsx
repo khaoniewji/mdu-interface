@@ -1,5 +1,5 @@
 // mdu/src/App.tsx
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom"; // Change this line
 import { useEffect } from "react";
 import Layout from "./components/windowed/layouts";
 import Downloads from "./components/downloads/download";
@@ -32,7 +32,6 @@ function App() {
   };
 
   return (
-
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <Router>
         <Layout>

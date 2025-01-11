@@ -90,22 +90,22 @@ function debounce<T extends (...args: any[]) => any>(
 
 async function getDriveInfo(): Promise<DriveInfo[]> {
     const drives: DriveInfo[] = [];
-    
+
     try {
         if (process.platform === 'win32') {
             const { stdout } = await execAsync('powershell -command "Get-WmiObject Win32_LogicalDisk | Select-Object DeviceID, DriveType | ConvertTo-Json"')
                 .catch(() => ({ stdout: '[]' }));  // Fallback to empty array on error
-            
+
             let driveList;
             try {
                 driveList = JSON.parse(stdout.trim());
             } catch {
                 driveList = [];
             }
-            
+
             // Handle both single drive and multiple drives
             const drivesToProcess = Array.isArray(driveList) ? driveList : [driveList];
-            
+
             for (const drive of drivesToProcess) {
                 if (drive?.DeviceID) {
                     try {
@@ -204,7 +204,7 @@ async function getSystemStats(): Promise<SystemStats> {
             if (cachedStats) {
                 drives = cachedStats.drives;
             }
-            
+
             // Get new drive info in the background
             getDriveInfo().then(newDrives => {
                 if (newDrives.length > 0) {  // Only update if we got valid drives
@@ -264,7 +264,7 @@ async function getSystemStats(): Promise<SystemStats> {
 // Modified subscription function with smoother updates
 function subscribeToSystemStats(window: BrowserWindow, interval: number = 5000): number {
     const id = subscriberId++;
-    
+
     const sendUpdate = debounce(async () => {
         try {
             if (!window.isDestroyed()) {
@@ -276,9 +276,9 @@ function subscribeToSystemStats(window: BrowserWindow, interval: number = 5000):
                 logger.error('Failed to send system stats:', error);
                 // Don't send error to frontend, use cached data instead
                 if (cachedStats) {
-                    window.webContents.send('system-stats-update', { 
-                        id, 
-                        stats: cachedStats 
+                    window.webContents.send('system-stats-update', {
+                        id,
+                        stats: cachedStats
                     });
                 }
             }
@@ -287,7 +287,7 @@ function subscribeToSystemStats(window: BrowserWindow, interval: number = 5000):
 
     const timer = setInterval(sendUpdate, Math.max(2000, interval));
     subscribers.set(id, timer);
-    
+
     // Send initial stats
     sendUpdate();
     return id;
@@ -313,7 +313,8 @@ const createWindow = (): void => {
             nodeIntegration: false,
             contextIsolation: true,
             sandbox: false,
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'preload.js'),
+            webSecurity: false // Be careful with this in production
         },
         titleBarStyle: 'hidden',
         titleBarOverlay: {
@@ -328,27 +329,64 @@ const createWindow = (): void => {
         mainWindow.loadURL('http://localhost:5173');
         mainWindow.webContents.openDevTools();
     } else {
-        mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+        // Update this section
+        mainWindow.loadFile(path.join(__dirname, '../dist/index.html'))
+            .catch(err => logger.error('Failed to load index.html:', err));
     }
+
+    // Add these event handlers for navigation
+    mainWindow.webContents.on('will-navigate', (event, url) => {
+        if (!isDev) {
+            event.preventDefault();
+            const hashPath = new URL(url).hash;
+            if (hashPath) {
+                mainWindow?.loadFile(path.join(__dirname, '../dist/index.html'), {
+                    hash: hashPath
+                });
+            }
+        }
+    });
+
+    // Handle external links
+    mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+        if (url.startsWith('http:') || url.startsWith('https:')) {
+            require('electron').shell.openExternal(url);
+        }
+        return { action: 'deny' };
+    });
 
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
 };
 
+function getAppIcon(): string {
+    const isDev = process.env.NODE_ENV === 'development';
+    const iconPath = isDev ? '.' : path.join(process.resourcesPath);
+
+    switch (process.platform) {
+        case 'win32':
+            return path.join(iconPath, 'icons', 'icon.ico');
+        case 'darwin':
+            return path.join(iconPath, 'icons', 'icon.icns');
+        default: // linux
+            return path.join(iconPath, 'icons', 'icon.png');
+    }
+}
+
 // App lifecycle handlers
 app.whenReady().then(() => {
     // Create native menu before creating the window
     if (process.platform === 'darwin') {
-      createNativeMenu();
+        createNativeMenu();
     }
     createWindow();
-  });
+});
 
 app.on('window-all-closed', () => {
     subscribers.forEach((timer) => clearInterval(timer));
     subscribers.clear();
-    
+
     if (process.platform !== 'darwin') {
         app.quit();
     }
@@ -380,7 +418,7 @@ ipcMain.handle('dialog:open', async (event, options) => {
 ipcMain.handle('app:getDocumentDir', async (_event, options) => {
     try {
         const documentsPath = app.getPath('documents');
-        return options?.defaultPath 
+        return options?.defaultPath
             ? path.join(documentsPath, options.defaultPath)
             : documentsPath;
     } catch (error) {

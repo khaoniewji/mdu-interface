@@ -9,3 +9,4 @@ bun.lockb
 dist-electron
 .env
 dev.cmd
+release

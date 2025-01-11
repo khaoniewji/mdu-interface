@@ -30,6 +30,14 @@ interface AddDownloadProps {
 }
 
 
+export interface DownloadOptions {
+  outputPath?: string;
+  isAudioOnly?: boolean;
+  filename?: string;
+  audioQuality: string;
+  videoQuality: string;
+  format: string;
+}
 
 function AddDownload({ isOpen, onClose, onAddDownload }: AddDownloadProps) {
   const { t } = useTranslation();

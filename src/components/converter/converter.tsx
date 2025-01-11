@@ -41,14 +41,14 @@ import {
 
 // Local Components and Types
 import ConverterList from "./converterlists";
-import AddConversion from "./addconversion";
-import { ConversionItem, ConversionOptions } from "./types";
+// import AddConversion from "./addconversion";
+import { ConversionItem } from "./types";
 import { invokeCommand } from "../../lib/webview";
 
 function Converter() {
   const [conversionData, setConversionData] = useState<ConversionItem[]>([]);
   const [activeConversions, setActiveConversions] = useState<ConversionItem[]>([]);
-  const [showConversionModal, setShowConversionModal] = useState<boolean>(false);
+  // const [setShowConversionModal] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -80,27 +80,27 @@ function Converter() {
     }
   };
 
-  const handleAddConversion = async (
-    inputPath: string,
-    format: string,
-    options: ConversionOptions,
-  ) => {
-    try {
-      await invokeCommand("start_conversion", {
-        inputPath,
-        format,
-        options: {
-          ...options,
-          outputFormat: format,
-        },
-      });
-      loadConversionHistory();
-      setShowConversionModal(false);
-    } catch (error) {
-      console.error("Failed to start conversion:", error);
-      throw error;
-    }
-  };
+  // const handleAddConversion = async (
+  //   inputPath: string,
+  //   format: string,
+  //   options: ConversionOptions,
+  // ) => {
+  //   try {
+  //     await invokeCommand("start_conversion", {
+  //       inputPath,
+  //       format,
+  //       options: {
+  //         ...options,
+  //         outputFormat: format,
+  //       },
+  //     });
+  //     loadConversionHistory();
+  //     // setShowConversionModal(false);
+  //   } catch (error) {
+  //     console.error("Failed to start conversion:", error);
+  //     throw error;
+  //   }
+  // };
 
   const handleStopConversion = async (conversionId: string) => {
     try {
@@ -298,7 +298,6 @@ function Converter() {
                     </p>
                     <Button
                       variant="outline"
-                      onClick={() => setShowConversionModal(true)}
                     >
                       <Plus className="w-4 h-4 mr-2" />
                       {t("converter.actions.addFirst")}
@@ -349,11 +348,11 @@ function Converter() {
       </CardContent>
 
       {/* Modals */}
-      <AddConversion
+      {/* <AddConversion
         isOpen={showConversionModal}
         onClose={() => setShowConversionModal(false)}
         onAddConversion={handleAddConversion}
-      />
+      /> */}
 
       {/* Clear History Dialog */}
       <AlertDialog open={showClearDialog} onOpenChange={setShowClearDialog}>
