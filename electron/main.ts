@@ -309,6 +309,7 @@ const createWindow = (): void => {
         width: 1200,
         height: 800,
         frame: false,
+        icon: getAppIcon(),
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
@@ -366,11 +367,11 @@ function getAppIcon(): string {
 
     switch (process.platform) {
         case 'win32':
-            return path.join(iconPath, 'icons', 'icon.ico');
+            return path.join(iconPath, 'icons', 'app.ico');
         case 'darwin':
-            return path.join(iconPath, 'icons', 'icon.icns');
+            return path.join(iconPath, 'icons', 'app.icns');
         default: // linux
-            return path.join(iconPath, 'icons', 'icon.png');
+            return path.join(iconPath, 'icons', 'app.png');
     }
 }
 
